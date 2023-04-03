@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
-import App from '../App';
 import userEvent from '@testing-library/user-event';
-import renderWithRouterAndRedux from './Helpers/renderWithRouterAndRedux';
+import App from '../App';
+import { renderWithRouterAndRedux } from './Helpers/renderWithRouterAndRedux';
 
 describe('Testes da tela de Login', () => {
   test('Testa se os inputs são renderizados corretamente', () => {
@@ -31,7 +31,7 @@ describe('Testes da tela de Login', () => {
 
     userEvent.click(sendButton);
 
-    const {pathname} = history.location;
+    const { pathname } = history.location;
     expect(pathname).toBe('/meals');
-  })
+  });
 });
