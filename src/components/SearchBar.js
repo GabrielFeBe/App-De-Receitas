@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchApiIngredient } from '../redux/actions';
+import { fetchApiIngredient, fetchApiLetter, fetchApiName } from '../redux/actions';
 
 function SearchBar() {
   const [filter, setFilter] = useState('');
@@ -15,7 +15,11 @@ function SearchBar() {
     if (filter === 'ingredient') {
       dispatch(fetchApiIngredient(search));
     } else if (filter === 'name-search') {
-      dispatch();
+      dispatch(fetchApiName(search));
+    } else if (filter === 'first-letter' && search.length <= 1) {
+      dispatch(fetchApiLetter(search));
+    } else {
+      global.alert('Your search must have only 1 (one) character');
     }
   };
 

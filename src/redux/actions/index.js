@@ -20,7 +20,6 @@ export const requestApi = () => ({
 
 export const fetchApiIngredient = (payload) => async (dispatch) => {
   dispatch(requestApi);
-  console.log(payload);
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${payload}`);
   const data = await response.json();
   dispatch(sendDataAction(data.meals));
@@ -28,8 +27,14 @@ export const fetchApiIngredient = (payload) => async (dispatch) => {
 
 export const fetchApiName = (payload) => async (dispatch) => {
   dispatch(requestApi);
-  console.log(payload);
-  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${payload}`);
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.meals));
+};
+
+export const fetchApiLetter = (payload) => async (dispatch) => {
+  dispatch(requestApi);
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${payload}`);
   const data = await response.json();
   dispatch(sendDataAction(data.meals));
 };
