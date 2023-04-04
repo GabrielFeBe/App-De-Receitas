@@ -1,0 +1,69 @@
+import React, { useState } from 'react';
+import { useDispatch, useStore } from 'react-redux';
+import { fetchApiIngredient } from '../redux/actions';
+
+function SearchBar() {
+  const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  const handleChange = ({ target }) => {
+    setFilter(target.value);
+  };
+
+  const handleClick = async () => {
+    if (filter === 'ingredient') {
+      dispatch(fetchApiIngredient(store.search));
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="input-ingredient">
+        <input
+          data-testid="ingredient-search-radio"
+          type="radio"
+          name="filter"
+          id="input-ingredient"
+          value="ingredient"
+          onChange={ handleChange }
+        />
+        Ingredient
+      </label>
+      {' '}
+      <label htmlFor="input-name-search">
+        <input
+          data-testid="name-search-radio"
+          type="radio"
+          name="filter"
+          id="input-name-search"
+          value="name-search"
+          onChange={ handleChange }
+        />
+        Name
+      </label>
+      {' '}
+      <label htmlFor="input-first-letter">
+        <input
+          data-testid="first-letter-search-radio"
+          type="radio"
+          name="filter"
+          id="input-first-letter"
+          value="first-letter"
+          onChange={ handleChange }
+        />
+        First Letter
+      </label>
+      {' '}
+      <button
+        data-testid="exec-search-btn"
+        type="button"
+        onClick={ handleClick }
+      >
+        Search
+      </button>
+    </div>
+  );
+}
+
+export default SearchBar;
