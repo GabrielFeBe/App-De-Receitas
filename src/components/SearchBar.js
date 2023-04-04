@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { fetchApiIngredient, fetchApiIngredientDrinks, fetchApiLetter, fetchApiLetterDrinks, fetchApiName, fetchApiNameDrinks } from '../redux/actions';
 
 function SearchBar() {
@@ -9,6 +9,8 @@ function SearchBar() {
   const { pathname } = location;
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.search);
+  const data = useSelector((state) => state.search.data);
+  const history = useHistory();
 
   const handleChange = ({ target }) => {
     setFilter(target.value);
@@ -37,6 +39,10 @@ function SearchBar() {
       global.alert('Your search must have only 1 (one) character');
     }
   };
+
+  if (data && data.length === 1) {
+    pathname === '/meals' ? history.push(`/${data.idMeal}`) : history.push(`/${data.idDrink}`)
+  }
 
   return (
     <div>
