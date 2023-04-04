@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchApiIngredient } from '../redux/actions';
 
 function SearchBar() {
   const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
-  const store = useStore();
+  const search = useSelector((state) => state.search.search);
 
   const handleChange = ({ target }) => {
     setFilter(target.value);
@@ -13,7 +13,9 @@ function SearchBar() {
 
   const handleClick = async () => {
     if (filter === 'ingredient') {
-      dispatch(fetchApiIngredient(store.search));
+      dispatch(fetchApiIngredient(search));
+    } else if (filter === 'name-search') {
+      dispatch();
     }
   };
 

@@ -18,10 +18,18 @@ export const requestApi = () => ({
   type: REQUEST_API,
 });
 
-export const fetchApiIngredient = async (payload) => async (dispatch) => {
-  dispatch(requestAPI());
+export const fetchApiIngredient = (payload) => async (dispatch) => {
+  dispatch(requestApi);
+  console.log(payload);
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${payload}`);
   const data = await response.json();
+  dispatch(sendDataAction(data.meals));
+};
 
-  dispatch(sendDataAction(data));
+export const fetchApiName = (payload) => async (dispatch) => {
+  dispatch(requestApi);
+  console.log(payload);
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.meals));
 };
