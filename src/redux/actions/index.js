@@ -38,3 +38,24 @@ export const fetchApiLetter = (payload) => async (dispatch) => {
   const data = await response.json();
   dispatch(sendDataAction(data.meals));
 };
+
+export const fetchApiIngredientDrinks = (payload) => async (dispatch) => {
+  dispatch(requestApi);
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.drinks));
+};
+
+export const fetchApiNameDrinks = (payload) => async (dispatch) => {
+  dispatch(requestApi);
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.drinks));
+};
+
+export const fetchApiLetterDrinks = (payload) => async (dispatch) => {
+  dispatch(requestApi);
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.drinks));
+};

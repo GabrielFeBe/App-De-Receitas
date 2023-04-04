@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchApiIngredient, fetchApiLetter, fetchApiName } from '../redux/actions';
+import { useLocation } from 'react-router-dom';
+import { fetchApiIngredient, fetchApiIngredientDrinks, fetchApiLetter, fetchApiLetterDrinks, fetchApiName, fetchApiNameDrinks } from '../redux/actions';
 
 function SearchBar() {
   const [filter, setFilter] = useState('');
+  const location = useLocation();
+  const { pathname } = location;
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.search);
 
@@ -11,13 +14,25 @@ function SearchBar() {
     setFilter(target.value);
   };
 
-  const handleClick = async () => {
+  const handleClickMeals = async () => {
     if (filter === 'ingredient') {
       dispatch(fetchApiIngredient(search));
     } else if (filter === 'name-search') {
       dispatch(fetchApiName(search));
     } else if (filter === 'first-letter' && search.length <= 1) {
       dispatch(fetchApiLetter(search));
+    } else {
+      global.alert('Your search must have only 1 (one) character');
+    }
+  };
+
+  const handleClickDrinks = async () => {
+    if (filter === 'ingredient') {
+      dispatch(fetchApiIngredientDrinks(search));
+    } else if (filter === 'name-search') {
+      dispatch(fetchApiNameDrinks(search));
+    } else if (filter === 'first-letter' && search.length <= 1) {
+      dispatch(fetchApiLetterDrinks(search));
     } else {
       global.alert('Your search must have only 1 (one) character');
     }
@@ -64,7 +79,7 @@ function SearchBar() {
       <button
         data-testid="exec-search-btn"
         type="button"
-        onClick={ handleClick }
+        onClick={ () => pathname === '/meals' ? handleClickMeals() : handleClickDrinks() }
       >
         Search
       </button>
