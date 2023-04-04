@@ -7,10 +7,12 @@ import MealsDetails from './pages/MealsDetails';
 import DrinksDetails from './pages/DrinksDetails';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import Footer from './components/Footer';
 
 function Routes() {
   return (
     <Switch>
+      <Route path="/footer" component={ Footer } />
       <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/drinks/:id-da-receita/in-progress" component={ DrinksDetails } />
