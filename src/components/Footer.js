@@ -2,7 +2,6 @@ import React from 'react';
 import './style/Footer.css';
 import { useHistory } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
-
 import mealIcon from '../images/mealIcon.svg';
 
 export default function Footer() {
