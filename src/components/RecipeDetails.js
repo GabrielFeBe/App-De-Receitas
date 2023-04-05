@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { recommendationDrinks, recommendationMeals } from '../redux/actions';
+import Carousel from './Carousel';
 
-export default function RecipeDetails() {
+function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [urlForVideo, setUrlForVideo] = useState('');
-  const [recomendations, setRecomendations] = useState([]);
   const location = useLocation();
   const { pathname } = location;
   const pathnameSplited = pathname.split('/');
   const pathnameAfterSplit = pathnameSplited[1];
   const pathnameId = pathnameSplited[2];
+  const loading = useSelector(({ recommend }) => recommend.recommendLoading);
+  console.log(loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(pathnameSplited);
@@ -21,14 +26,8 @@ export default function RecipeDetails() {
         const data = await response.json();
         setRecipeDetails(data.meals);
       };
-      const fetchMealsRecomendations = async () => {
-        const endPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-        const response = await fetch(endPoint);
-        const data = await response.json();
-        setRecomendations(data.drinks);
-      };
+      dispatch(recommendationMeals());
       fetchMeals();
-      fetchMealsRecomendations();
     } else {
       const fetchDrinks = async () => {
         const endPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${pathnameId}`;
@@ -36,14 +35,8 @@ export default function RecipeDetails() {
         const data = await response.json();
         setRecipeDetails(data.drinks);
       };
-      const fetchDrinksRecomendations = async () => {
-        const endPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-        const response = await fetch(endPoint);
-        const data = await response.json();
-        setRecomendations(data.meals);
-      };
+      dispatch(recommendationDrinks());
       fetchDrinks();
-      fetchDrinksRecomendations();
     }
   }, []);
   useEffect(() => {
@@ -129,9 +122,10 @@ export default function RecipeDetails() {
            web-share"
         allowfullscreen
       /> }
-      {recomendations.map((recom, i) => (
-        <p key={ i }>{recom.strDrink || recom.strMeal}</p>
-      ))}
+
+      {!loading && <Carousel />}
     </div>
   );
 }
+
+export default RecipeDetails;
