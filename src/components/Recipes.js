@@ -3,9 +3,7 @@ import React from 'react';
 export default function Recipes() {
   return (
     <div>
-      <h2
-        data-testid={ `${index}-card-name` }
-      />
+      <h2 data-testid={ `${index}-card-name` }>{ index }</h2>
       <div
         data-testid={ `${index}-recipe-card` }
       />
