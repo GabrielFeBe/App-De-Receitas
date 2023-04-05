@@ -1,8 +1,9 @@
-import { SEARCH_INPUT, SEND_DATA } from '../actions';
+import { REQUEST_API, SEARCH_INPUT, SEND_DATA } from '../actions';
 
 const INITIAL_STATE = {
   search: '',
   data: '',
+  isLoading: false,
 };
 
 const search = (state = INITIAL_STATE, action) => {
@@ -17,6 +18,14 @@ const search = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       data: action.payload,
+      isLoading: false,
+    };
+  }
+
+  case REQUEST_API: {
+    return {
+      ...state,
+      isLoading: true,
     };
   }
   default:
