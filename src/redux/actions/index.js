@@ -1,4 +1,3 @@
-
 import fetchDrinksRecomendations from '../../services/DrinksRecommendation';
 import fetchMealsRecomendations from '../../services/MealRecommendation';
 
@@ -115,4 +114,3 @@ export const fetchApiLetterDrinks = (payload) => async (dispatch) => {
   const data = await response.json();
   dispatch(sendDataAction(data.drinks));
 };
-
