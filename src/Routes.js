@@ -15,13 +15,17 @@ function Routes() {
       <Route path="/footer" component={ Footer } />
       <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       <Route path="/done-recipes" component={ DoneRecipes } />
-      <Route path="/drinks/:id-da-receita/in-progress" component={ DrinksDetails } />
-      <Route path="/meals/:id-da-receita/in-progress" component={ MealsDetails } />
-      <Route path="/drinks/:id-da-receita" component={ DrinksDetails } />
-      <Route path="/meals/:id-da-receita" component={ MealsDetails } />
+      {/* <Route
+        exact
+        path="/drinks/:id-da-receita/in-progress"
+        component={ DrinksDetails }
+      /> */}
+      {/* <Route path="/meals/:id-da-receita/in-progress" component={ MealsDetails } /> */}
+      <Route exact path="/drinks/:id" component={ DrinksDetails } />
+      <Route path="/meals/:id" component={ MealsDetails } />
       <Route path="/profile" component={ Profile } />
-      <Route path="/drinks" component={ Drinks } />
-      <Route path="/meals" component={ Meals } />
+      <Route exact path="/drinks" component={ Drinks } />
+      <Route exact path="/meals" component={ Meals } />
       <Route exact path="/" component={ Login } />
     </Switch>
   );
