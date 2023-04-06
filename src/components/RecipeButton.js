@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 export default function RecipeButton() {
   const [condition, setCondition] = useState(false);
   const location = useLocation();
   const { pathname } = location;
+  const history = useHistory();
+  console.log(pathname);
   const pathnameSplited = pathname.split('/');
   const pathnameAfterSplit = pathnameSplited[1];
   const pathnameId = pathnameSplited[2];
@@ -30,12 +32,20 @@ export default function RecipeButton() {
     <div>
 
       { condition ? (
-        <button className="startRecipe" data-testid="start-recipe-btn">
+        <button
+          className="startRecipe"
+          data-testid="start-recipe-btn"
+          onClick={ () => history.push(`${pathname}/in-progress`) }
+        >
           Continue Recipe
 
         </button>)
         : (
-          <button className="startRecipe" data-testid="start-recipe-btn">
+          <button
+            className="startRecipe"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(`${pathname}/in-progress`) }
+          >
             Start Recipe
 
           </button>

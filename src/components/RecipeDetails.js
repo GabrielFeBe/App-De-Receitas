@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { recommendationDrinks, recommendationMeals } from '../redux/actions';
+import { recommendationDrinks,
+  recommendationMeals,
+  fetchMealUsingId,
+  fetchDrinkUsingId } from '../redux/actions';
 import Carousel from './Carousel';
 import RecipeButton from './RecipeButton';
+import ShareButton from './ShareButton';
+import FavoriteButton from './FavoriteButton';
 
 function RecipeDetails() {
-  const [recipeDetails, setRecipeDetails] = useState([]);
+  // const [recipeDetails, setRecipeDetails] = useState([]);
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [urlForVideo, setUrlForVideo] = useState('');
   const [recipeAlreadyBeenDone, setRecipeAlreadyBeenDone] = useState(false);
@@ -16,27 +21,16 @@ function RecipeDetails() {
   const pathnameAfterSplit = pathnameSplited[1];
   const pathnameId = pathnameSplited[2];
   const loading = useSelector(({ recommend }) => recommend.recommendLoading);
+  const recipeDetails = useSelector(({ RecipePage }) => RecipePage.detailsObject);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (pathnameAfterSplit === 'meals') {
-      const fetchMeals = async () => {
-        const endPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${pathnameId}`;
-        const response = await fetch(endPoint);
-        const data = await response.json();
-        setRecipeDetails(data.meals);
-      };
+      dispatch(fetchMealUsingId(pathnameId));
       dispatch(recommendationMeals());
-      fetchMeals();
     } else {
-      const fetchDrinks = async () => {
-        const endPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${pathnameId}`;
-        const response = await fetch(endPoint);
-        const data = await response.json();
-        setRecipeDetails(data.drinks);
-      };
+      dispatch(fetchDrinkUsingId(pathnameId));
       dispatch(recommendationDrinks());
-      fetchDrinks();
     }
   }, []);
   useEffect(() => {
@@ -132,6 +126,8 @@ function RecipeDetails() {
       /> }
       {!loading && <Carousel />}
       { !recipeAlreadyBeenDone && <RecipeButton />}
+      <ShareButton />
+      <FavoriteButton />
     </div>
   );
 }

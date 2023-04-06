@@ -1,5 +1,7 @@
 import fetchDrinksRecomendations from '../../services/DrinksRecommendation';
 import fetchMealsRecomendations from '../../services/MealRecommendation';
+import fetchDrinkWithId from '../../services/FetchDrink';
+import fetchMealWithId from '../../services/FetchMeal';
 
 export const requestFetchDrinks = () => ({
   type: 'REQUEST_DRINKS',
@@ -114,3 +116,55 @@ export const fetchApiLetterDrinks = (payload) => async (dispatch) => {
   const data = await response.json();
   dispatch(sendDataAction(data.drinks));
 };
+
+export const requesMealFetch = () => ({
+  type: 'REQUEST_FETCH_MEAL',
+});
+
+export const requestDrinkFetch = () => ({
+  type: 'REQUEST_FETCH_DRINK',
+
+});
+
+export const responseMealFetchSucess = (data) => ({
+  type: 'RESPONSE_FETCH_MEAL_SUCESS',
+  data,
+});
+
+export const responseDrinkFetchSucess = (data) => ({
+  type: 'RESPONSE_FETCH_DRINK_SUCESS',
+  data,
+});
+
+export const responseMealFetchError = (error) => ({
+  type: 'RESPONSE_FETCH_MEAL_ERROR',
+  error,
+});
+
+export const responseDrinkFetchError = (error) => ({
+  type: 'RESPONSE_FETCH_DRINK_ERROR',
+  error,
+});
+
+export function fetchMealUsingId(pathnameId) {
+  return async (dispatch) => {
+    dispatch(requesMealFetch());
+    try {
+      const response = await fetchMealWithId(pathnameId);
+      dispatch(responseMealFetchSucess(response));
+    } catch (error) {
+      dispatch(responseMealFetchError(error));
+    }
+  };
+}
+export function fetchDrinkUsingId(pathnameId) {
+  return async (dispatch) => {
+    dispatch(requestDrinkFetch());
+    try {
+      const response = await fetchDrinkWithId(pathnameId);
+      dispatch(responseDrinkFetchSucess(response));
+    } catch (error) {
+      dispatch(responseDrinkFetchError(error));
+    }
+  };
+}
