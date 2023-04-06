@@ -3,22 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { recommendationDrinks, recommendationMeals } from '../redux/actions';
 import Carousel from './Carousel';
+import RecipeButton from './RecipeButton';
 
 function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [urlForVideo, setUrlForVideo] = useState('');
+  const [recipeAlreadyBeenDone, setRecipeAlreadyBeenDone] = useState(false);
   const location = useLocation();
   const { pathname } = location;
   const pathnameSplited = pathname.split('/');
   const pathnameAfterSplit = pathnameSplited[1];
   const pathnameId = pathnameSplited[2];
   const loading = useSelector(({ recommend }) => recommend.recommendLoading);
-  console.log(loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(pathnameSplited);
     if (pathnameAfterSplit === 'meals') {
       const fetchMeals = async () => {
         const endPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${pathnameId}`;
@@ -72,6 +72,14 @@ function RecipeDetails() {
     }
   }, [recipeDetails]);
 
+  const doneReciepes = JSON.parse(localStorage.getItem('doneRecipes'));
+  useEffect(() => {
+    if (doneReciepes !== null) {
+      const recipeDone = doneReciepes.some((recipe) => +recipe.id === +pathnameId);
+      setRecipeAlreadyBeenDone(recipeDone);
+    }
+  }, []);
+
   return (
     <div>
       {recipeDetails.length > 0
@@ -122,8 +130,8 @@ function RecipeDetails() {
            web-share"
         allowfullscreen
       /> }
-
       {!loading && <Carousel />}
+      { !recipeAlreadyBeenDone && <RecipeButton />}
     </div>
   );
 }

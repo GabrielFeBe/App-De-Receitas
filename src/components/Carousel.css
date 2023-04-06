@@ -18,3 +18,8 @@
   flex-shrink: 0;
   width: 30%;
 }
+
+.startRecipe {
+  bottom: 0;
+  position: fixed;
+}
