@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import { renderWithRouterAndRedux } from './Helpers/renderWithRouterAndRedux';
+import renderWithRouterAndRedux from './Helpers/renderWithRouterAndRedux';
 
 describe('Testes do componente Header', () => {
   const PAGE_TITLE = 'page-title';

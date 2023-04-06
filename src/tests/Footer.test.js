@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import Footer from '../components/Footer';
-import { renderWithRouterAndRedux } from './Helpers/renderWithRouterAndRedux';
+import renderWithRouterAndRedux from './Helpers/renderWithRouterAndRedux';
 
 describe('Testes da tela de Footer', () => {
   test('Testa se os inputs são renderizados corretamente', () => {

@@ -91,6 +91,7 @@ export const fetchApiLetter = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${payload}`);
   const data = await response.json();
+  console.log(data, 'action');
   dispatch(sendDataAction(data.meals));
 };
 
