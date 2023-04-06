@@ -1,17 +1,15 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import Drinks from '../pages/Drinks';
+import Meals from '../pages/Meals';
 
 export default function Recipes() {
+  const location = useLocation();
+  const { pathname } = location;
+
   return (
     <div>
-      <h2 data-testid={ `${index}-card-name` }>{ index }</h2>
-      <div
-        data-testid={ `${index}-recipe-card` }
-      />
-      <img
-        data-testid={ `${index}-card-img` }
-        src={ img }
-        alt={ alt }
-      />
+      {pathname === '/meals' ? <Meals /> : <Drinks />}
     </div>
   );
 }

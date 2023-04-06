@@ -1,17 +1,32 @@
 import React from 'react';
 import './style/Footer.css';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
+import { sendDataAction } from '../redux/actions';
 
 export default function Footer() {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleRedirectDrinks = () => {
+    dispatch(sendDataAction([]));
+    history.push('/drinks');
+  };
+
+  const handleRedirectMeals = () => {
+    dispatch(sendDataAction([]));
+    history.push('/meals');
+  };
+
   return (
     <footer
       data-testid="footer"
     >
       <button
-        onClick={ () => history.push('/drinks') }
+        type="button"
+        onClick={ handleRedirectDrinks }
       >
         <img
           data-testid="drinks-bottom-btn"
@@ -20,7 +35,8 @@ export default function Footer() {
         />
       </button>
       <button
-        onClick={ () => history.push('/meals') }
+        type="button"
+        onClick={ handleRedirectMeals }
       >
         <img
           data-testid="meals-bottom-btn"
