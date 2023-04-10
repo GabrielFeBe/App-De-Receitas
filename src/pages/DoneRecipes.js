@@ -25,7 +25,7 @@ function DoneRecipes() {
           <button data-testid={ `${index}-horizontal-share-btn` }>Compartilhar</button>
           {recipe.tags.map((tag, indexTag) => (
             <p
-              key={ indexTag }
+              key={ indexTag}
               data-testid={ `${index}-${tag}-horizontal-tag` }
             >
               {tag.tagName}
