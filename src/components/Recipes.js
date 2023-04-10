@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Drinks from '../pages/Drinks';
 import Meals from '../pages/Meals';
+import {
+  fetchByCategory,
+  fetchByCategoryDrinks,
+  fetchCleanFilter,
+  fetchCleanFilterDrinks,
+} from '../redux/actions';
 
 export default function Recipes() {
   const location = useLocation();
@@ -9,6 +16,7 @@ export default function Recipes() {
 
   const [categoryDrinks, setCategoryDrinks] = useState([]);
   const [categoryMeals, setCategoryMaels] = useState([]);
+  const [categorySelect, setCategorySelect] = useState(false);
 
   useEffect(() => {
     const drinksCategories = async () => {
@@ -32,14 +40,41 @@ export default function Recipes() {
     mealsCategories();
   }, []);
 
+  const dispatch = useDispatch();
+
   return (
     <div>
       <div>
+        {pathname === '/meals'
+          ? (
+            <button
+              data-testid="All-category-filter"
+              onClick={ () => dispatch(fetchCleanFilter()) }
+            >
+              All
+            </button>
+          )
+          : (
+            <button
+              data-testid="All-category-filter"
+              onClick={ () => dispatch(fetchCleanFilterDrinks()) }
+            >
+              All
+            </button>)}
 
         {pathname === '/drinks' ? categoryDrinks.map((drink, i) => (
           <button
             key={ i }
             data-testid={ `${drink.strCategory}-category-filter` }
+            onClick={ () => {
+              if (!categorySelect) {
+                dispatch(fetchByCategoryDrinks(drink.strCategory));
+                setCategorySelect(true);
+              } else {
+                dispatch(fetchCleanFilterDrinks());
+                setCategorySelect(false);
+              }
+            } }
           >
             {drink.strCategory}
           </button>)) : categoryMeals.map((meals, i) => (
@@ -47,6 +82,15 @@ export default function Recipes() {
             <button
               key={ i }
               data-testid={ `${meals.strCategory}-category-filter` }
+              onClick={ () => {
+                if (!categorySelect) {
+                  dispatch(fetchByCategory(meals.strCategory));
+                  setCategorySelect(true);
+                } else {
+                  dispatch(fetchCleanFilter());
+                  setCategorySelect(false);
+                }
+              } }
             >
               {meals.strCategory}
             </button>)
