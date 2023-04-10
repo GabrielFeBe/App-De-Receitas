@@ -44,13 +44,6 @@ function RecipeInProgress() {
     <div>
       {!recipeLoading && <Recipe /> }
       {!loading && <Carousel />}
-      <button
-        data-testid="finish-recipe-btn"
-        className="startRecipe"
-      >
-        Finish Recipe
-
-      </button>
       <ShareButton />
       <FavoriteButton />
     </div>
