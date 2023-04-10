@@ -1,7 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
-import Meals from './pages/Meals';
-import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import MealsDetails from './pages/MealsDetails';
 import DrinksDetails from './pages/DrinksDetails';
@@ -9,6 +7,7 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Footer from './components/Footer';
 import RecipeInProgress from './components/RecipeInProgress';
+import Recipes from './components/Recipes';
 
 function Routes() {
   return (
@@ -25,8 +24,8 @@ function Routes() {
       <Route exact path="/drinks/:id" component={ DrinksDetails } />
       <Route path="/meals/:id" component={ MealsDetails } />
       <Route path="/profile" component={ Profile } />
-      <Route exact path="/drinks" component={ Drinks } />
-      <Route exact path="/meals" component={ Meals } />
+      <Route exact path="/drinks" component={ Recipes } />
+      <Route exact path="/meals" component={ Recipes } />
       <Route exact path="/" component={ Login } />
     </Switch>
   );

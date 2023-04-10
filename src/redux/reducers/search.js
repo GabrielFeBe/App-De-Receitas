@@ -2,7 +2,7 @@ import { REQUEST_API, SEARCH_INPUT, SEND_DATA } from '../actions';
 
 const INITIAL_STATE = {
   search: '',
-  data: '',
+  data: [],
   isLoading: false,
 };
 
