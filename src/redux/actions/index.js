@@ -169,3 +169,31 @@ export function fetchDrinkUsingId(pathnameId) {
     }
   };
 }
+
+export const fetchByCategory = (payload) => async (dispatch) => {
+  dispatch(requestApi());
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.meals));
+};
+
+export const fetchByCategoryDrinks = (payload) => async (dispatch) => {
+  dispatch(requestApi());
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${payload}`);
+  const data = await response.json();
+  dispatch(sendDataAction(data.drinks));
+};
+
+export const fetchCleanFilter = () => async (dispatch) => {
+  dispatch(requestApi());
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
+  dispatch(sendDataAction(data.meals));
+};
+
+export const fetchCleanFilterDrinks = () => async (dispatch) => {
+  dispatch(requestApi());
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
+  dispatch(sendDataAction(data.drinks));
+};
