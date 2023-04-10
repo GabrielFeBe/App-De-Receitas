@@ -16,6 +16,7 @@ export default function Recipes() {
 
   const [categoryDrinks, setCategoryDrinks] = useState([]);
   const [categoryMeals, setCategoryMaels] = useState([]);
+  const [categorySelect, setCategorySelect] = useState(false);
 
   useEffect(() => {
     const drinksCategories = async () => {
@@ -65,7 +66,15 @@ export default function Recipes() {
           <button
             key={ i }
             data-testid={ `${drink.strCategory}-category-filter` }
-            onClick={ () => dispatch(fetchByCategoryDrinks(drink.strCategory)) }
+            onClick={ () => {
+              if (!categorySelect) {
+                dispatch(fetchByCategoryDrinks(drink.strCategory));
+                setCategorySelect(true);
+              } else {
+                dispatch(fetchCleanFilterDrinks());
+                setCategorySelect(false);
+              }
+            } }
           >
             {drink.strCategory}
           </button>)) : categoryMeals.map((meals, i) => (
@@ -73,7 +82,15 @@ export default function Recipes() {
             <button
               key={ i }
               data-testid={ `${meals.strCategory}-category-filter` }
-              onClick={ () => dispatch(fetchByCategory(meals.strCategory)) }
+              onClick={ () => {
+                if (!categorySelect) {
+                  dispatch(fetchByCategory(meals.strCategory));
+                  setCategorySelect(true);
+                } else {
+                  dispatch(fetchCleanFilter());
+                  setCategorySelect(false);
+                }
+              } }
             >
               {meals.strCategory}
             </button>)
