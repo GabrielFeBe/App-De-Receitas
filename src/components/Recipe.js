@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+const four = 4;
+
 function RecipeDetails() {
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [urlForVideo, setUrlForVideo] = useState('');
@@ -71,7 +73,7 @@ function RecipeDetails() {
           <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
 
         </>)}
-      {pathnameSplited.length === 4 ? ingredientAndMeasure.map(
+      {pathnameSplited.length === four ? ingredientAndMeasure.map(
         ({ ingredient, measure }, index) => (
           <label
             key={ index }
