@@ -11,7 +11,6 @@ function Meals() {
 
   useEffect(() => {
     const fetch = async () => {
-      console.log('aqui');
       const allData = await fetchMeals();
       setDataToRender(allData);
     };
