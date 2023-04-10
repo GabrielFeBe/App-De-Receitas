@@ -15,7 +15,9 @@ function DoneRecipes() {
       {doneRecipes?.map((recipe, index) => (
         recipe.type === 'meal'
           ? <>
-            <image
+            <img
+              style={ { width: '260px' } }
+              alt="icone do botao"
               key={ index }
               src={ recipe.image }
               data-testid={ `${index}-horizontal-image` }
@@ -29,8 +31,13 @@ function DoneRecipes() {
 
             <h4 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h4>
             <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-            <button data-testid={ `${index}-horizontal-share-btn` }>
-              <image src={ shareButton } />
+            <button>
+              <img
+                style={ { width: '30px' } }
+                data-testid={ `${index}-horizontal-share-btn` }
+                alt="icone do botao"
+                src={ shareButton }
+              />
             </button>
 
             {recipe.tags.map((tag, indexTag) => (
@@ -38,13 +45,38 @@ function DoneRecipes() {
                 key={ indexTag }
                 data-testid={ `${index}-${tag}-horizontal-tag` }
               >
-                {tag.tagName}
+                {tag}
 
               </p>
 
             ))}
-            </>
-          : 'b'
+          </>
+          : <>
+            <img
+              alt="icone do botao"
+              style={ { width: '260px' } }
+              key={ index }
+              src={ recipe.image }
+              data-testid={ `${index}-horizontal-image` }
+            />
+            <h4 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h4>
+            <h3
+              data-testid={ `${index}-horizontal-top-text` }
+            >
+              {recipe.alcoholicOrNot}
+
+            </h3>
+            <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
+            <button>
+              <img
+                style={ { width: '30px' } }
+                data-testid={ `${index}-horizontal-share-btn` }
+                alt="icone do botao"
+                src={ shareButton }
+              />
+            </button>
+          </>
+
       ))}
     </div>
   );
