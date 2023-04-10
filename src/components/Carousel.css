@@ -24,3 +24,7 @@
   position: fixed;
   right: 0;
 }
+
+.riscado {
+  text-decoration: line-through solid black;
+}

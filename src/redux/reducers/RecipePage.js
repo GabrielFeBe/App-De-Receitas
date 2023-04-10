@@ -15,11 +15,13 @@ const RecipePage = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       detailsObject: action.data.meals,
+      detailsLoading: false,
     };
   case 'RESPONSE_FETCH_DRINK_SUCESS':
     return {
       ...state,
       detailsObject: action.data.drinks,
+      detailsLoading: false,
     };
   case 'RESPONSE_FETCH_MEAL_ERROR':
   case 'RESPONSE_FETCH_DRINK_ERROR':

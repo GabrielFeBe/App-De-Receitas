@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { recommendationDrinks,
@@ -6,13 +6,11 @@ import { recommendationDrinks,
   fetchMealUsingId,
   fetchDrinkUsingId } from '../redux/actions';
 import Carousel from './Carousel';
-import RecipeButton from './RecipeButton';
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 import Recipe from './Recipe';
 
-function RecipeDetails() {
-  const [recipeAlreadyBeenDone, setRecipeAlreadyBeenDone] = useState(false);
+function RecipeInProgress() {
   const location = useLocation();
   const { pathname } = location;
   const pathnameSplited = pathname.split('/');
@@ -46,11 +44,17 @@ function RecipeDetails() {
     <div>
       {!recipeLoading && <Recipe /> }
       {!loading && <Carousel />}
-      { !recipeAlreadyBeenDone && <RecipeButton />}
+      <button
+        data-testid="finish-recipe-btn"
+        className="startRecipe"
+      >
+        Finish Recipe
+
+      </button>
       <ShareButton />
       <FavoriteButton />
     </div>
   );
 }
 
-export default RecipeDetails;
+export default RecipeInProgress;

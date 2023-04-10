@@ -54,9 +54,6 @@ export default function FavoriteButton() {
         ? (
           <button
             onClick={ () => {
-              // const teste = recipe.idMeal || recipe.idDrink;
-              // const isThere = favoriteRecipes.some((favRec) => favRec.id === teste);
-              // console.log(isThere);
               setIsFav(false);
               deletingFavoriteRecipe();
             } }
