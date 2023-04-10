@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import clipboardCopy from 'clipboard-copy';
 import shareButton from '../images/shareIcon.svg';
 import Header from '../components/Header';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 function DoneRecipes() {
   const [doneRecipes] = useLocalStorage('doneRecipes', [{}]);
+  const [copied, setCopied] = useState(false);
   return (
     <div>
       <Header />
@@ -31,7 +33,13 @@ function DoneRecipes() {
 
             <h4 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h4>
             <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-            <button>
+            <button
+              onClick={
+                () => clipboardCopy(`http://localhost:3000/meals/${recipe.id}`).then(() => {
+                  setCopied(true);
+                })
+              }
+            >
               <img
                 style={ { width: '30px' } }
                 data-testid={ `${index}-horizontal-share-btn` }
@@ -39,6 +47,7 @@ function DoneRecipes() {
                 src={ shareButton }
               />
             </button>
+            {copied && <p>Link copied!</p>}
 
             {recipe.tags.map((tag, indexTag) => (
               <p
@@ -67,7 +76,13 @@ function DoneRecipes() {
 
             </h3>
             <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-            <button>
+            <button
+              onClick={
+                () => clipboardCopy(`http://localhost:3000/drinks/${recipe.id}`).then(() => {
+                  setCopied(true);
+                })
+              }
+            >
               <img
                 style={ { width: '30px' } }
                 data-testid={ `${index}-horizontal-share-btn` }
@@ -75,6 +90,8 @@ function DoneRecipes() {
                 src={ shareButton }
               />
             </button>
+            {copied && <p>Link copied!</p>}
+
           </>
 
       ))}
