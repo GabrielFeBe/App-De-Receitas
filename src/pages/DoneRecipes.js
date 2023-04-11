@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 function DoneRecipes() {
-  const [doneRecipes] = useLocalStorage('doneRecipes', [{}]);
+  const [doneRecipes] = useLocalStorage('doneRecipes');
   const [copied, setCopied] = useState(false);
   const history = useHistory();
   return (
