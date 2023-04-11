@@ -19,16 +19,16 @@ function FavoriteRecipes() {
   }, []);
 
   const handleClickMeal = (id) => {
-    navigator.clipboard.writeText(`http://localhost:3000/meals/${id}`)
+    navigator.clipboard.writeText(`http://localhost:3000/meals/${id}`);
 
-    setMessageCopied(true)
-  }
+    setMessageCopied(true);
+  };
 
   const handleClickDrink = (id) => {
-    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`)
+    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
 
-    setMessageCopied(true)
-  }
+    setMessageCopied(true);
+  };
 
   return (
     <div>
@@ -68,9 +68,9 @@ function FavoriteRecipes() {
               >
                 {`${rec.nationality} - ${rec.category}`}
               </p>
-              <button 
+              <button
                 type="button"
-                onClick={() => handleClickMeal(rec.id)}
+                onClick={ () => handleClickMeal(rec.id) }
               >
                 <img
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -99,9 +99,9 @@ function FavoriteRecipes() {
                 <p data-testid={ `${index}-horizontal-top-text` }>
                   {`${rec.alcoholicOrNot}`}
                 </p>
-                <button 
+                <button
                   type="button"
-                  onClick={() => handleClickDrink(rec.id)}
+                  onClick={ () => handleClickDrink(rec.id) }
                 >
                   <img
                     data-testid={ `${index}-horizontal-share-btn` }
