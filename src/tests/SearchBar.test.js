@@ -49,7 +49,7 @@ describe('Verifica o componente "SearchBar"', () => {
     expect(firstLetterRadio).toBeInTheDocument();
   });
 
-  it.only('Verifica se é possivel fazer uma busca', async () => {
+  it('Verifica se é possivel fazer uma busca', async () => {
     act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Chicken', data: chickenMeals } }, '/meals'); });
 
     const ingredientRadio = await screen.findByRole('radio', {
@@ -71,8 +71,8 @@ describe('Verifica o componente "SearchBar"', () => {
 
     act(() => { userEvent.click(ingredientRadio); });
     act(() => { userEvent.click(searchButton); });
-    // expect(global.fetch).toBeCalled();
-    // expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=Chicken');
+    expect(global.fetch).toBeCalled();
+    expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=Chicken');
   });
 
   it('Verifica se é possivel fazer uma busca com o filtro por nome', async () => {
