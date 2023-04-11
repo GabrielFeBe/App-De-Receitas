@@ -70,7 +70,7 @@ describe('Verifica o componente "SearchBar"', () => {
     expect(searchButton).toBeInTheDocument();
 
     act(() => { userEvent.click(ingredientRadio); });
-    act(() => { userEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=Chicken');
   });
@@ -86,7 +86,7 @@ describe('Verifica o componente "SearchBar"', () => {
     });
 
     act(() => { fireEvent.click(nameRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=soup');
   });
@@ -102,7 +102,7 @@ describe('Verifica o componente "SearchBar"', () => {
     });
 
     act(() => { fireEvent.click(firstLetterRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=a');
   });
@@ -119,7 +119,7 @@ describe('Verifica o componente "SearchBar"', () => {
     });
 
     act(() => { fireEvent.click(firstLetterRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.alert).toBeCalled();
   });
 });
@@ -177,7 +177,7 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     expect(searchButton).toBeInTheDocument();
 
     act(() => { fireEvent.click(ingredientRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Light rum');
   });
@@ -193,7 +193,7 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     });
 
     act(() => { fireEvent.click(nameRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin');
   });
@@ -209,7 +209,7 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     });
 
     act(() => { fireEvent.click(firstLetterRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a');
   });
@@ -227,7 +227,7 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     });
 
     act(() => { fireEvent.click(firstLetterRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.alert).toBeCalled();
   });
 });
@@ -249,7 +249,7 @@ describe('Verifica se ao fazer a busca e retornar apenas um resultado, o usuario
     });
 
     act(() => { fireEvent.click(nameRadio); });
-    act(() => { fireEvent.click(searchButton); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata');
   });
