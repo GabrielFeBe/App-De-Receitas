@@ -32,14 +32,6 @@ function RecipeInProgress() {
     }
   }, []);
 
-  const doneReciepes = JSON.parse(localStorage.getItem('doneRecipes'));
-  useEffect(() => {
-    if (doneReciepes !== null) {
-      const recipeDone = doneReciepes.some((recipe) => +recipe.id === +pathnameId);
-      setRecipeAlreadyBeenDone(recipeDone);
-    }
-  }, []);
-
   return (
     <div>
       {!recipeLoading && <Recipe /> }
