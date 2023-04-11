@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const four = 4;
 
@@ -12,8 +12,21 @@ function RecipeDetails() {
   const { pathname } = location;
   const pathnameSplited = pathname.split('/');
   const pathnameAfterSplit = pathnameSplited[1];
+  const pathnameID = pathnameSplited[2];
   const recipeDetails = useSelector(({ RecipePage }) => RecipePage.detailsObject);
-  console.log(pathnameSplited);
+  const history = useHistory();
+  const recipe = useSelector(({ RecipePage }) => RecipePage.detailsObject)[0];
+
+  useEffect(() => {
+    const inProgRecipe = JSON.parse(
+      localStorage.getItem('inProgressRecipes'),
+    ) || {};
+    if (!inProgRecipe[pathnameAfterSplit]) {
+      inProgRecipe[pathnameAfterSplit] = {};
+    }
+    const pageInfo = inProgRecipe[pathnameAfterSplit][pathnameID] || [];
+    setCheckboxID(pageInfo);
+  }, []);
   useEffect(() => {
     if (recipeDetails.length > 0) {
       const keys = Object.keys(recipeDetails[0]);
@@ -84,11 +97,28 @@ function RecipeDetails() {
             <input
               type="checkbox"
               id={ index }
-              onChange={ () => {
+              onChange={ ({ target }) => {
                 if (checkboxID.includes(index)) {
-                  setCheckboxID(checkboxID.filter((checkbox) => checkbox !== index));
+                  const inProgRecipe = JSON.parse(
+                    localStorage.getItem('inProgressRecipes'),
+                  ) || {};
+                  inProgRecipe[pathnameAfterSplit] = inProgRecipe[pathnameAfterSplit]
+                  || {};
+                  inProgRecipe[pathnameAfterSplit][pathnameID] = checkboxID.filter(
+                    (checkbox) => checkbox !== +target.id,
+                  );
+                  localStorage.setItem('inProgressRecipes', JSON.stringify(inProgRecipe));
+                  setCheckboxID(checkboxID.filter((checkbox) => checkbox !== +target.id));
                 } else {
-                  setCheckboxID([...checkboxID, index]);
+                  const inProgRecipe = JSON.parse(
+                    localStorage.getItem('inProgressRecipes'),
+                  ) || {};
+                  inProgRecipe[pathnameAfterSplit] = inProgRecipe[pathnameAfterSplit]
+                  || {};
+                  inProgRecipe[pathnameAfterSplit][pathnameID] = [
+                    ...checkboxID, +target.id];
+                  localStorage.setItem('inProgressRecipes', JSON.stringify(inProgRecipe));
+                  setCheckboxID([...checkboxID, +target.id]);
                 }
               } }
               checked={ checkboxID.includes(index) }
@@ -104,6 +134,7 @@ function RecipeDetails() {
             {`${ingredient}: ${measure}`}
 
           </p>))}
+      <br />
       { pathnameAfterSplit === 'meals' && recipeDetails.length > 0
       && <iframe
         width="560"
@@ -120,6 +151,34 @@ function RecipeDetails() {
            web-share"
         allowfullscreen
       /> }
+      {pathnameSplited.length === four && (
+        <button
+          data-testid="finish-recipe-btn"
+          className="startRecipe"
+          disabled={ checkboxID.length !== ingredientAndMeasure.length }
+          onClick={ () => {
+            history.push('/done-recipes');
+            const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+            console.log(doneRecipes);
+            const savingFavoriteRecipeObject = {
+              id: recipe.idDrink || recipe.idMeal,
+              type: recipe.idDrink !== undefined ? 'drink' : 'meal',
+              nationality: recipe.strArea !== undefined ? recipe.strArea : '',
+              category: recipe.strCategory || '',
+              alcoholicOrNot: recipe.strAlcoholic
+              !== undefined ? recipe.strAlcoholic : '',
+              name: recipe.strDrink || recipe.strMeal,
+              image: recipe.strDrinkThumb || recipe.strMealThumb,
+              doneDate: new Date(),
+              tags: recipe.strTags !== null ? recipe.strTags.split(',') : [],
+            };
+            doneRecipes.push(savingFavoriteRecipeObject);
+            console.log(doneRecipes);
+            localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+          } }
+        >
+          Finish Recipe
+        </button>)}
     </div>
   );
 }
