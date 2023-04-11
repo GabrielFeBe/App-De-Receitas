@@ -6,6 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteRecipes() {
   const [favorite, setFavorite] = useState([]);
+  const [messageCopied, setMessageCopied] = useState(false);
 
   const getItem = () => {
     const recoveredData = localStorage.getItem('favoriteRecipes');
@@ -20,13 +21,13 @@ function FavoriteRecipes() {
   const handleClickMeal = (id) => {
     navigator.clipboard.writeText(`http://localhost:3000/meals/${id}`)
 
-    global.alert('Link copied!')
+    setMessageCopied(true)
   }
 
   const handleClickDrink = (id) => {
     navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`)
 
-    global.alert('Link copied!')
+    setMessageCopied(true)
   }
 
   return (
@@ -84,6 +85,7 @@ function FavoriteRecipes() {
                   alt="Favorite Button"
                 />
               </button>
+              {messageCopied && <p>Link copied!</p>}
             </section>
           )
             : (
@@ -114,6 +116,7 @@ function FavoriteRecipes() {
                     alt="Favorite Button"
                   />
                 </button>
+                {messageCopied && <p>Link copied!</p>}
               </section>
             )
         ))}
