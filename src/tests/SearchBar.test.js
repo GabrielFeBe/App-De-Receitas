@@ -1,11 +1,20 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './Helpers/renderWithRouterAndRedux';
 import App from '../App';
 
 import SearchBar from '../components/SearchBar';
 import fetch from '../../cypress/mocks/fetch';
+import { meals } from '../../cypress/mocks/meals';
+import { drinks } from '../../cypress/mocks/drinks';
+import oneMeal from '../../cypress/mocks/oneMeal';
+import aDrinks from './mocks/aDrinks';
+import ginDrinks from '../../cypress/mocks/ginDrinks';
+import drinksByIngredient from '../../cypress/mocks/drinksByIngredient';
+import firstLetterMeal from './mocks/firstLetterMeal';
+import soupMeals from '../../cypress/mocks/soupMeals';
+import chickenMeals from '../../cypress/mocks/chickenMeals';
 
 const toogleSearchButtonID = 'search-top-btn';
 
@@ -15,23 +24,22 @@ describe('Verifica o componente "SearchBar"', () => {
     global.fetch.mockImplementation(fetch);
   });
   afterEach(() => jest.clearAllMocks());
-  it('Verifica se ao ser clicado no botao de busca, o Searchbar é exibido', () => {
-    const { store } = renderWithRouterAndRedux(<App />, {}, '/meals');
-    console.log(store.getState());
-    const toogleSearchButton = screen.getByTestId(toogleSearchButtonID);
+  it('Verifica se ao ser clicado no botao de busca, o Searchbar é exibido', async () => {
+    act(() => { renderWithRouterAndRedux(<App />, { search: { data: meals } }, '/meals'); });
+    expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const toogleSearchButton = await screen.findByTestId(toogleSearchButtonID);
 
+    act(() => { fireEvent.click(toogleSearchButton); });
     expect(toogleSearchButton).toBeInTheDocument();
 
-    userEvent.click(toogleSearchButton);
-
-    const searchBar = screen.getByRole('textbox');
-    const ingredientRadio = screen.getByRole('radio', {
+    const searchBar = await screen.findByRole('textbox');
+    const ingredientRadio = await screen.findByRole('radio', {
       name: /ingredient/i,
     });
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
 
@@ -41,80 +49,77 @@ describe('Verifica o componente "SearchBar"', () => {
     expect(firstLetterRadio).toBeInTheDocument();
   });
 
-  it('Verifica se é possivel fazer uma busca', () => {
-    const { store } = renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Chicken' } }, '/meals');
-    console.log(store.getState());
+  it('Verifica se é possivel fazer uma busca', async () => {
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Chicken', data: chickenMeals } }, '/meals'); });
 
-    const ingredientRadio = screen.getByRole('radio', {
+    const ingredientRadio = await screen.findByRole('radio', {
       name: /ingredient/i,
     });
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
-
     expect(ingredientRadio).toBeInTheDocument();
     expect(nameRadio).toBeInTheDocument();
     expect(firstLetterRadio).toBeInTheDocument();
     expect(searchButton).toBeInTheDocument();
 
-    userEvent.click(ingredientRadio);
-    userEvent.click(searchButton);
+    act(() => { userEvent.click(ingredientRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=Chicken');
   });
 
-  it('Verifica se é possivel fazer uma busca com o filtro por nome', () => {
-    const { store } = renderWithRouterAndRedux(<SearchBar />, { search: { search: 'soup' } }, '/meals');
+  it('Verifica se é possivel fazer uma busca com o filtro por nome', async () => {
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'soup', data: soupMeals } }, '/meals'); });
 
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(nameRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(nameRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=soup');
-    console.log(store.getState());
   });
 
-  it('Verifica se é possivel fazer uma busca com o filtro pela primeira letra', () => {
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'a' } }, '/meals');
+  it('Verifica se é possivel fazer uma busca com o filtro pela primeira letra', async () => {
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'a', data: firstLetterMeal } }, '/meals'); });
 
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(firstLetterRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(firstLetterRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=a');
   });
 
-  it('Verifica se ao digitar mais de uma letra com o filtro de Primeira letra, é emitido um alerta', () => {
+  it('Verifica se ao digitar mais de uma letra com o filtro de Primeira letra, é emitido um alerta', async () => {
     global.alert = jest.fn();
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'ad' } }, '/meals');
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'ad' } }, '/meals'); });
 
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(firstLetterRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(firstLetterRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.alert).toBeCalled();
   });
 });
@@ -125,23 +130,23 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     global.fetch.mockImplementation(fetch);
   });
   afterEach(() => jest.clearAllMocks());
-  it('Verifica se ao ser clicado no botao de busca, o Searchbar é exibido', () => {
-    renderWithRouterAndRedux(<App />, {}, '/drinks');
-    console.log('test1');
-    const toogleSearchButton = screen.getByTestId(toogleSearchButtonID);
+  it('Verifica se ao ser clicado no botao de busca, o Searchbar é exibido', async () => {
+    act(() => { renderWithRouterAndRedux(<App />, { search: { data: drinks } }, '/drinks'); });
+    expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const toogleSearchButton = await screen.findByTestId(toogleSearchButtonID);
 
     expect(toogleSearchButton).toBeInTheDocument();
 
-    userEvent.click(toogleSearchButton);
+    act(() => { fireEvent.click(toogleSearchButton); });
 
-    const searchBar = screen.getByRole('textbox');
-    const ingredientRadio = screen.getByRole('radio', {
+    const searchBar = await screen.findByRole('textbox');
+    const ingredientRadio = await screen.findByRole('radio', {
       name: /ingredient/i,
     });
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
 
@@ -150,21 +155,19 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     expect(nameRadio).toBeInTheDocument();
     expect(firstLetterRadio).toBeInTheDocument();
   });
-  it('Verifica se é possivel fazer uma busca', () => {
-    console.log('test2');
+  it('Verifica se é possivel fazer uma busca', async () => {
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Light rum', data: drinksByIngredient } }, '/drinks'); });
 
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Light rum' } }, '/drinks');
-
-    const ingredientRadio = screen.getByRole('radio', {
+    const ingredientRadio = await screen.findByRole('radio', {
       name: /ingredient/i,
     });
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
@@ -173,62 +176,58 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
     expect(firstLetterRadio).toBeInTheDocument();
     expect(searchButton).toBeInTheDocument();
 
-    userEvent.click(ingredientRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(ingredientRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Light rum');
   });
 
-  it('Verifica se é possivel fazer uma busca com o filtro por nome', () => {
-    console.log('test3');
+  it('Verifica se é possivel fazer uma busca com o filtro por nome', async () => {
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'gin', data: ginDrinks } }, '/drinks'); });
 
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'gin' } }, '/drinks');
-
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(nameRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(nameRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin');
   });
 
-  it('Verifica se é possivel fazer uma busca com o filtro pela primeira letra', () => {
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'a' } }, '/drinks');
-    console.log('test4');
+  it('Verifica se é possivel fazer uma busca com o filtro pela primeira letra', async () => {
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'a', data: aDrinks } }, '/drinks'); });
 
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(firstLetterRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(firstLetterRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a');
   });
 
-  it('Verifica se ao digitar mais de uma letra com o filtro de Primeira letra, é emitido um alerta', () => {
-    console.log('test5');
+  it('Verifica se ao digitar mais de uma letra com o filtro de Primeira letra, é emitido um alerta', async () => {
     global.alert = jest.fn();
 
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'ad' } }, '/drinks');
+    act(() => { renderWithRouterAndRedux(<SearchBar />, { search: { search: 'ad' } }, '/drinks'); });
 
-    const firstLetterRadio = screen.getByRole('radio', {
+    const firstLetterRadio = await screen.findByRole('radio', {
       name: /first letter/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(firstLetterRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(firstLetterRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.alert).toBeCalled();
   });
 });
@@ -240,17 +239,17 @@ describe('Verifica se ao fazer a busca e retornar apenas um resultado, o usuario
   });
   afterEach(() => jest.clearAllMocks());
   it('Verifica o redirecionamento', async () => {
-    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Arrabiata' } }, '/meals');
+    renderWithRouterAndRedux(<SearchBar />, { search: { search: 'Arrabiata', data: oneMeal } }, '/meals');
 
-    const nameRadio = screen.getByRole('radio', {
+    const nameRadio = await screen.findByRole('radio', {
       name: /name/i,
     });
-    const searchButton = screen.getByRole('button', {
+    const searchButton = await screen.findByRole('button', {
       name: /search/i,
     });
 
-    userEvent.click(nameRadio);
-    userEvent.click(searchButton);
+    act(() => { fireEvent.click(nameRadio); });
+    await act(async () => { userEvent.click(searchButton); });
     expect(global.fetch).toBeCalled();
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata');
   });

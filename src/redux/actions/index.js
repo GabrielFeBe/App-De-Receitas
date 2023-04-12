@@ -3,6 +3,8 @@ import fetchMealsRecomendations from '../../services/MealRecommendation';
 import fetchDrinkWithId from '../../services/FetchDrink';
 import fetchMealWithId from '../../services/FetchMeal';
 
+const ERROR_MESSAGE = 'Sorry, we haven\'t found any recipes for these filters.';
+
 export const requestFetchDrinks = () => ({
   type: 'REQUEST_DRINKS',
 });
@@ -79,43 +81,73 @@ export const fetchApiIngredient = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${payload}`);
   const data = await response.json();
-  dispatch(sendDataAction(data.meals));
+  if (data.meals) {
+    dispatch(sendDataAction(data.meals));
+  } else {
+    dispatch(sendDataAction([]));
+    global.alert(ERROR_MESSAGE);
+  }
 };
 
 export const fetchApiName = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${payload}`);
   const data = await response.json();
-  dispatch(sendDataAction(data.meals));
+  if (data.meals) {
+    dispatch(sendDataAction(data.meals));
+  } else {
+    dispatch(sendDataAction([]));
+    global.alert(ERROR_MESSAGE);
+  }
 };
 
 export const fetchApiLetter = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${payload}`);
   const data = await response.json();
-  console.log(data, 'action');
-  dispatch(sendDataAction(data.meals));
+  if (data.meals) {
+    dispatch(sendDataAction(data.meals));
+  } else {
+    dispatch(sendDataAction([]));
+    global.alert(ERROR_MESSAGE);
+  }
 };
 
 export const fetchApiIngredientDrinks = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${payload}`);
-  const data = await response.json();
-  dispatch(sendDataAction(data.drinks));
+  try {
+    const data = await response.json();
+    dispatch(sendDataAction(data.drinks));
+  } catch (error) {
+    dispatch(sendDataAction([]));
+    console.log(error);
+    global.alert(ERROR_MESSAGE);
+  }
 };
 
 export const fetchApiNameDrinks = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${payload}`);
   const data = await response.json();
-  dispatch(sendDataAction(data.drinks));
+  if (data.drinks) {
+    dispatch(sendDataAction(data.drinks));
+  } else {
+    dispatch(sendDataAction([]));
+    global.alert(ERROR_MESSAGE);
+  }
 };
 
 export const fetchApiLetterDrinks = (payload) => async (dispatch) => {
   dispatch(requestApi());
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${payload}`);
   const data = await response.json();
-  dispatch(sendDataAction(data.drinks));
+  if (data.drinks) {
+    dispatch(sendDataAction(data.drinks));
+  } else {
+    dispatch(sendDataAction([]));
+    global.alert(ERROR_MESSAGE);
+  }
 };
 
 export const requesMealFetch = () => ({
