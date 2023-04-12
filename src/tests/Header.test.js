@@ -88,4 +88,19 @@ describe('Testes do componente Header', () => {
     const searchInput = screen.getByTestId('search-input');
     expect(searchInput).toBeVisible();
   });
+
+  test('Verifica se ao clicar no botão de search o input é renderizado', () => {
+    renderWithRouterAndRedux(<App />, {}, '/meals');
+
+    const toogleSearchButton = screen.getByTestId('search-top-btn');
+    expect(toogleSearchButton).toBeInTheDocument();
+
+    userEvent.click(toogleSearchButton);
+
+    const textInput = screen.getByRole('textbox');
+    expect(textInput).toBeInTheDocument();
+
+    userEvent.type(textInput, 'Chicken');
+    expect(textInput).toHaveValue('Chicken');
+  });
 });
