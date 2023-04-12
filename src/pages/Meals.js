@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { sendDataAction } from '../redux/actions';
@@ -11,6 +11,8 @@ function Meals() {
   const [dataToRender, setDataToRender] = useState([]);
   const dispatch = useDispatch();
   const MAX_INDEX = 12;
+
+  const history = useHistory();
 
   if (data === null) {
     global.alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -32,19 +34,18 @@ function Meals() {
         .filter((recipe, index) => index < MAX_INDEX)
         .map((rec, index) => (
           <section key={ rec.idMeal } data-testid={ `${index}-recipe-card` }>
-            <Link
-              to={ `/meals/${rec.idMeal}` }
-              data-testid={ `${index}-recipe-card` }
+            <button
+              onClick={ () => history.push(`/meals/${rec.idMeal}`) }
             >
-              <div>
-                <img
-                  src={ rec.strMealThumb }
-                  alt={ `thumbnail for recipe ${rec.strMeal}` }
-                  data-testid={ `${index}-card-img` }
-                  style={ { width: '180px' } }
-                />
-              </div>
-            </Link>
+
+              <img
+                src={ rec.strMealThumb }
+                alt={ `thumbnail for recipe ${rec.strMeal}` }
+                data-testid={ `${index}-card-img` }
+                style={ { width: '180px' } }
+              />
+
+            </button>
             <p data-testid={ `${index}-card-name` }>
               {rec.strMeal}
             </p>
