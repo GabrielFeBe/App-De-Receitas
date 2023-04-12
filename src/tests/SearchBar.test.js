@@ -25,7 +25,7 @@ describe('Verifica o componente "SearchBar"', () => {
   });
   afterEach(() => jest.clearAllMocks());
   it('Verifica se ao ser clicado no botao de busca, o Searchbar é exibido', async () => {
-    act(() => { renderWithRouterAndRedux(<App />, { search: { data: meals } }, '/meals'); });
+    await act(async () => { renderWithRouterAndRedux(<App />, { search: { data: meals } }, '/meals'); });
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const toogleSearchButton = await screen.findByTestId(toogleSearchButtonID);
 
@@ -131,7 +131,7 @@ describe('Verifica se no caminho "/drinks" é possivel fazer buscas', () => {
   });
   afterEach(() => jest.clearAllMocks());
   it('Verifica se ao ser clicado no botao de busca, o Searchbar é exibido', async () => {
-    act(() => { renderWithRouterAndRedux(<App />, { search: { data: drinks } }, '/drinks'); });
+    await act(async () => { renderWithRouterAndRedux(<App />, { search: { data: drinks } }, '/drinks'); });
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const toogleSearchButton = await screen.findByTestId(toogleSearchButtonID);
 
