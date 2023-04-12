@@ -11,6 +11,7 @@ function Drinks() {
   const MAX_INDEX = 12;
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   if (data === null) {
     global.alert('Sorry, we haven\'t found any recipes for these filters.');
