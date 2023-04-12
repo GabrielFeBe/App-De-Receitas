@@ -18,6 +18,14 @@ function FavoriteRecipes() {
     setFavorite(getItem());
   }, []);
 
+  const handleFavorite = (id) => {
+    const currentArray = getItem();
+    const newArray = currentArray.filter((recipe) => recipe.id !== id);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+    setFavorite(newArray);
+  };
+
   const handleClickMeal = (id) => {
     navigator.clipboard.writeText(`http://localhost:3000/meals/${id}`);
 
@@ -31,77 +39,47 @@ function FavoriteRecipes() {
   };
 
   return (
-    <div>
-      <Header />
+    <>
       <div>
-        <button
-          data-testid="filter-by-all-btn"
-          type="button"
-        >
-          All
-        </button>
-        <button
-          data-testid="filter-by-meal-btn"
-          type="button"
-        >
-          Meals
-        </button>
-        <button
-          data-testid="filter-by-drink-btn"
-          type="button"
-        >
-          Drinks
-        </button>
-      </div>
-      <div>
-        {favorite.map((rec, index) => (
-          rec.type === 'meal' ? (
-            <section key={ rec.id }>
-              <img
-                data-testid={ `${index}-horizontal-image` }
-                src={ rec.image }
-                alt={ `Imagem da receita ${rec.name}` }
-              />
-              <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                {`${rec.nationality} - ${rec.category}`}
-              </p>
-              <button
-                type="button"
-                onClick={ () => handleClickMeal(rec.id) }
-              >
-                <img
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  src={ shareIcon }
-                  alt="Share Button"
-                />
-              </button>
-              <button type="button">
-                <img
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ blackHeartIcon }
-                  alt="Favorite Button"
-                />
-              </button>
-              {messageCopied && <p>Link copied!</p>}
-            </section>
-          )
-            : (
+        <Header />
+        <div>
+          <button
+            data-testid="filter-by-all-btn"
+            type="button"
+          >
+            All
+          </button>
+          <button
+            data-testid="filter-by-meal-btn"
+            type="button"
+          >
+            Meals
+          </button>
+          <button
+            data-testid="filter-by-drink-btn"
+            type="button"
+          >
+            Drinks
+          </button>
+        </div>
+        <div>
+          {favorite.map((rec, index) => (
+            rec.type === 'meal' ? (
               <section key={ rec.id }>
                 <img
                   data-testid={ `${index}-horizontal-image` }
                   src={ rec.image }
-                  alt={ `Imagem do drink ${rec.name}` }
+                  alt={ `Imagem da receita ${rec.name}` }
                 />
                 <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
-                <p data-testid={ `${index}-horizontal-top-text` }>
-                  {`${rec.alcoholicOrNot}`}
+                <p
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  {`${rec.nationality} - ${rec.category}`}
                 </p>
                 <button
                   type="button"
-                  onClick={ () => handleClickDrink(rec.id) }
+                  onClick={ () => handleClickMeal(rec.id) }
                 >
                   <img
                     data-testid={ `${index}-horizontal-share-btn` }
@@ -109,7 +87,10 @@ function FavoriteRecipes() {
                     alt="Share Button"
                   />
                 </button>
-                <button type="button">
+                <button
+                  type="button"
+                  onClick={ () => handleFavorite(rec.id) }
+                >
                   <img
                     data-testid={ `${index}-horizontal-favorite-btn` }
                     src={ blackHeartIcon }
@@ -119,10 +100,47 @@ function FavoriteRecipes() {
                 {messageCopied && <p>Link copied!</p>}
               </section>
             )
-        ))}
+              : (
+                <section key={ rec.id }>
+                  <img
+                    data-testid={ `${index}-horizontal-image` }
+                    src={ rec.image }
+                    alt={ `Imagem do drink ${rec.name}` }
+                  />
+                  <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
+                  <p data-testid={ `${index}-horizontal-top-text` }>
+                    {`${rec.alcoholicOrNot}`}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={ () => handleClickDrink(rec.id) }
+                  >
+                    <img
+                      data-testid={ `${index}-horizontal-share-btn` }
+                      src={ shareIcon }
+                      alt="Share Button"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={ () => handleFavorite(rec.id) }
+                  >
+                    <img
+                      data-testid={ `${index}-horizontal-favorite-btn` }
+                      src={ blackHeartIcon }
+                      alt="Favorite Button"
+                    />
+                  </button>
+                  {messageCopied && <p>Link copied!</p>}
+                </section>
+              )
+          ))}
+        </div>
       </div>
+      <br />
+      <br />
       <Footer />
-    </div>
+    </>
   );
 }
 
