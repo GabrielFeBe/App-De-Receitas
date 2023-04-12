@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { sendDataAction } from '../redux/actions';
 import { fetchMeals } from '../services/API';
 
 function Meals() {
   const data = useSelector((state) => state.search.data);
   const [dataToRender, setDataToRender] = useState([]);
-  const dispatch = useDispatch();
   const MAX_INDEX = 12;
 
   const history = useHistory();

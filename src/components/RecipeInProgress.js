@@ -32,25 +32,10 @@ function RecipeInProgress() {
     }
   }, []);
 
-  const doneReciepes = JSON.parse(localStorage.getItem('doneRecipes'));
-  useEffect(() => {
-    if (doneReciepes !== null) {
-      const recipeDone = doneReciepes.some((recipe) => +recipe.id === +pathnameId);
-      setRecipeAlreadyBeenDone(recipeDone);
-    }
-  }, []);
-
   return (
     <div>
       {!recipeLoading && <Recipe /> }
       {!loading && <Carousel />}
-      <button
-        data-testid="finish-recipe-btn"
-        className="startRecipe"
-      >
-        Finish Recipe
-
-      </button>
       <ShareButton />
       <FavoriteButton />
     </div>

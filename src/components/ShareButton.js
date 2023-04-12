@@ -4,12 +4,14 @@ import clipboardCopy from 'clipboard-copy';
 export default function ShareButton() {
   const [copied, setCopied] = useState(false);
   const { href } = window.location;
+  const hrefSplited = href.split('/in-progress');
   return (
     <>
       <button
         data-testid="share-btn"
-        onClick={ () => clipboardCopy(href).then(() => {
+        onClick={ () => clipboardCopy(hrefSplited[0]).then(() => {
           setCopied(true);
+          console.log(hrefSplited);
         }) }
       >
         ShareButton

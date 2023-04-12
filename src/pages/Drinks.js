@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { sendDataAction } from '../redux/actions';
 import { fetchDrinks } from '../services/API';
 
 function Drinks() {
   const data = useSelector((state) => state.search.data);
   const [dataToRender, setDataToRender] = useState([]);
-  const dispatch = useDispatch();
   const MAX_INDEX = 12;
 
   const history = useHistory();
@@ -30,7 +28,6 @@ function Drinks() {
   return (
     <div>
       <Header />
-      {console.log(data, dataToRender)}
       {(data.length >= 1 ? data : dataToRender)
         .filter((dr, index) => index < MAX_INDEX)
         .map((drink, index) => (
