@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import shareIcon from '../images/shareIcon.svg';
@@ -38,6 +39,24 @@ function FavoriteRecipes() {
     setMessageCopied(true);
   };
 
+  const handleFilterAll = () => {
+    setFavorite(getItem());
+  };
+
+  const handleFilterMeals = () => {
+    const rawDataMeal = getItem();
+    const filteredDataMeal = rawDataMeal.filter((recipe) => recipe.type === 'meal');
+
+    setFavorite(filteredDataMeal);
+  };
+
+  const handleFilterDrinks = () => {
+    const rawDataDrink = getItem();
+    const filteredDataDrink = rawDataDrink.filter((recipe) => recipe.type === 'drink');
+
+    setFavorite(filteredDataDrink);
+  };
+
   return (
     <>
       <div>
@@ -46,18 +65,21 @@ function FavoriteRecipes() {
           <button
             data-testid="filter-by-all-btn"
             type="button"
+            onClick={ handleFilterAll }
           >
             All
           </button>
           <button
             data-testid="filter-by-meal-btn"
             type="button"
+            onClick={ handleFilterMeals }
           >
             Meals
           </button>
           <button
             data-testid="filter-by-drink-btn"
             type="button"
+            onClick={ handleFilterDrinks }
           >
             Drinks
           </button>
@@ -66,12 +88,16 @@ function FavoriteRecipes() {
           {favorite.map((rec, index) => (
             rec.type === 'meal' ? (
               <section key={ rec.id }>
-                <img
-                  data-testid={ `${index}-horizontal-image` }
-                  src={ rec.image }
-                  alt={ `Imagem da receita ${rec.name}` }
-                />
-                <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
+                <Link to={ `/meals/${rec.id}` }>
+                  <img
+                    data-testid={ `${index}-horizontal-image` }
+                    src={ rec.image }
+                    alt={ `Imagem da receita ${rec.name}` }
+                  />
+                </Link>
+                <Link to={ `/meals/${rec.id}` }>
+                  <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
+                </Link>
                 <p
                   data-testid={ `${index}-horizontal-top-text` }
                 >
@@ -102,12 +128,16 @@ function FavoriteRecipes() {
             )
               : (
                 <section key={ rec.id }>
-                  <img
-                    data-testid={ `${index}-horizontal-image` }
-                    src={ rec.image }
-                    alt={ `Imagem do drink ${rec.name}` }
-                  />
-                  <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
+                  <Link to={ `/drinks/${rec.id}` }>
+                    <img
+                      data-testid={ `${index}-horizontal-image` }
+                      src={ rec.image }
+                      alt={ `Imagem do drink ${rec.name}` }
+                    />
+                  </Link>
+                  <Link to={ `/drinks/${rec.id}` }>
+                    <p data-testid={ `${index}-horizontal-name` }>{rec.name}</p>
+                  </Link>
                   <p data-testid={ `${index}-horizontal-top-text` }>
                     {`${rec.alcoholicOrNot}`}
                   </p>
