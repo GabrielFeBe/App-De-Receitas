@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -46,12 +46,13 @@ function SearchBar() {
       global.alert('Your search must have only 1 (one) character');
     }
   };
-
-  if (data && data.length === 1 && pathname === '/meals') {
-    history.push(`/meals/${data[0].idMeal}`);
-  } else if (data && data.length === 1 && pathname === '/drinks') {
-    history.push(`/drinks/${data[0].idDrink}`);
-  }
+  useEffect(() => {
+    if (data && data.length === 1 && pathname === '/meals') {
+      history.push(`/meals/${data[0].idMeal}`);
+    } else if (data && data.length === 1 && pathname === '/drinks') {
+      history.push(`/drinks/${data[0].idDrink}`);
+    }
+  }, [data, history, pathname]);
 
   if (!isLoading) {
     return (
