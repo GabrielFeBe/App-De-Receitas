@@ -88,11 +88,18 @@ function FavoriteRecipes() {
           {favorite.map((rec, index) => (
             rec.type === 'meal' ? (
               <section key={ rec.id }>
-                <Link to={ `/meals/${rec.id}` }>
+                <Link
+                  to={ `/meals/${rec.id}` }
+                >
                   <img
-                    data-testid={ `${index}-horizontal-image` }
                     src={ rec.image }
                     alt={ `Imagem da receita ${rec.name}` }
+                    style={ {
+                      width: '250px',
+                      height: '250px',
+                    } }
+                    data-testid={ `${index}-horizontal-image` }
+
                   />
                 </Link>
                 <Link to={ `/meals/${rec.id}` }>
@@ -111,6 +118,10 @@ function FavoriteRecipes() {
                     data-testid={ `${index}-horizontal-share-btn` }
                     src={ shareIcon }
                     alt="Share Button"
+                    style={ {
+                      width: '250px',
+                      height: '250px',
+                    } }
                   />
                 </button>
                 <button

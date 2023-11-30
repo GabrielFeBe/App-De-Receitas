@@ -8,15 +8,44 @@ import useLocalStorage from '../hooks/useLocalStorage';
 function DoneRecipes() {
   const [doneRecipes] = useLocalStorage('doneRecipes');
   const [copied, setCopied] = useState(false);
+  const [filterRecipes, setFilterRecipes] = useState('all');
   const history = useHistory();
+  console.log(doneRecipes);
   return (
     <div>
       <Header />
-      <button data-testid="filter-by-all-btn">All</button>
-      <button data-testid="filter-by-meal-btn">Meals</button>
-      <button data-testid="filter-by-drink-btn">Drinks</button>
+      <button
+        data-testid="filter-by-all-btn"
+        onClick={ () => {
+          setFilterRecipes('all');
+        } }
+      >
+        All
 
-      {doneRecipes?.map((recipe, index) => (
+      </button>
+      <button
+        data-testid="filter-by-meal-btn"
+        onClick={ () => {
+          setFilterRecipes('meal');
+        } }
+      >
+        Meals
+
+      </button>
+      <button
+        data-testid="filter-by-drink-btn"
+        onClick={ () => {
+          setFilterRecipes('drink');
+        } }
+      >
+        Drinks
+
+      </button>
+
+      {doneRecipes?.filter(({ type }) => {
+        if (filterRecipes === 'all') return true;
+        return type === filterRecipes;
+      }).map((recipe, index) => (
         recipe.type === 'meal'
           ? (
             <>
