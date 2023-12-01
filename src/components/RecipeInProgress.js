@@ -30,6 +30,8 @@ function RecipeInProgress() {
       dispatch(fetchDrinkUsingId(pathnameId));
       dispatch(recommendationDrinks());
     }
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

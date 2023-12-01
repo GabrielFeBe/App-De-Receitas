@@ -40,10 +40,14 @@ function Header() {
     default:
       break;
     }
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     dispatch(searchInputAction(searchInput));
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput]);
 
   const handleRedirect = () => {

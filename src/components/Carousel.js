@@ -19,8 +19,9 @@ export default function Carousel() {
     } else {
       const sliceRecommendation = state.drinksRecommendation.slice(0, six);
       setRecommendCard(sliceRecommendation);
-      console.log(sliceRecommendation);
     }
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathnameAfterSplit]);
   return (
     <div className="carousel">

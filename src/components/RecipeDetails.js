@@ -32,6 +32,8 @@ function RecipeDetails() {
       dispatch(fetchDrinkUsingId(pathnameId));
       dispatch(recommendationDrinks());
     }
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const doneReciepes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -40,6 +42,8 @@ function RecipeDetails() {
       const recipeDone = doneReciepes.some((recipe) => +recipe.id === +pathnameId);
       setRecipeAlreadyBeenDone(recipeDone);
     }
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

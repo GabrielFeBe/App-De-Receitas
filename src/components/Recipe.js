@@ -26,6 +26,8 @@ function RecipeDetails() {
     }
     const pageInfo = inProgRecipe[pathnameAfterSplit][pathnameID] || [];
     setCheckboxID(pageInfo);
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (recipeDetails.length > 0) {
@@ -58,6 +60,8 @@ function RecipeDetails() {
       const urlForUse = url.replaceAll('watch?v=', 'embed/');
       setUrlForVideo(urlForUse);
     }
+    // expect warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipeDetails]);
 
   return (
