@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import searchIcon from '../images/searchIcon.svg';
-import profileIcon from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
 import { searchInputAction } from '../redux/actions';
+import purpleProf from '../svg/header/profilePurple.svg';
+import purpleSearch from '../svg/header/searchPurple.svg';
+import logo from '../svg/header/logo.svg';
+import icon from '../svg/header/icon.svg';
+import meals from '../svg/header/meals.svg';
+
+const objSvg = {
+  Meals: meals,
+};
 
 function Header() {
   const [title, setTitle] = useState('');
@@ -63,54 +70,81 @@ function Header() {
   };
 
   return (
-    <div>
-      <header>
-        <p data-testid="page-title">{title}</p>
-        {hideSearch ? (
-          <button
-            type="button"
-            onClick={ handleRedirect }
-          >
-            <img data-testid="profile-top-btn" src={ profileIcon } alt="icone do botão" />
-          </button>
-        )
-          : (
-            <>
-              {toggleSearchBar && (
-                <div>
-                  <input
-                    type="text"
-                    value={ searchInput }
-                    onChange={ (e) => handleChange(e) }
-                    data-testid="search-input"
-                    placeholder="Insira sua busca aqui"
+    <div className="mb-[20px]">
+      <header className="bg-[#FCDC36] flex h-[52px] justify-between">
+        <section className="flex items-center gap-[20px]">
+
+          <img src={ icon } alt="" className="w-[42.6px] h-[39.28px] ml-[26px]" />
+          <img src={ logo } alt="" className="w-[109px] h-[17px]" />
+        </section>
+        <section className="flex items-center gap-[16.15px] mr-[21.29px]">
+
+          {hideSearch ? (
+            <button
+              type="button"
+              onClick={ handleRedirect }
+            >
+              <img
+                data-testid="profile-top-btn"
+                src={ purpleProf }
+                alt="icone do botão"
+                className="w-[28px] h-[28px]"
+              />
+            </button>
+          )
+            : (
+              <>
+
+                <button
+                  type="button"
+                  onClick={ handleToggle }
+                >
+                  <img
+                    data-testid="search-top-btn"
+                    src={ purpleSearch }
+                    alt="icone do botão"
+                    className="w-[28px] h-[28px]"
+
                   />
-                  <SearchBar />
-                </div>
-              )}
-              <button
-                type="button"
-                onClick={ handleToggle }
-              >
-                <img
-                  data-testid="search-top-btn"
-                  src={ searchIcon }
-                  alt="icone do botão"
-                />
-              </button>
-              <button
-                type="button"
-                onClick={ handleRedirect }
-              >
-                <img
-                  data-testid="profile-top-btn"
-                  src={ profileIcon }
-                  alt="icone do botão"
-                />
-              </button>
-            </>
-          )}
+                </button>
+                <button
+                  type="button"
+                  onClick={ handleRedirect }
+                >
+                  <img
+                    data-testid="profile-top-btn"
+                    src={ purpleProf }
+                    alt="icone do botão"
+                    className="w-[28px] h-[28px]"
+                  />
+                </button>
+              </>
+            )}
+        </section>
+
       </header>
+      <h1 data-testid="page-title" className="mb-[21px] mt-[31px]">
+        <img
+          className="w-[147px] h-64px m-auto"
+          src={ objSvg[title] }
+          alt="Page icon"
+        />
+
+      </h1>
+      {toggleSearchBar && (
+        <div className=" w-[338px] h-[128px] m-auto flex flex-col">
+          <input
+            type="text"
+            value={ searchInput }
+            onChange={ (e) => handleChange(e) }
+            data-testid="search-input"
+            placeholder="Insira sua busca aqui"
+            className="border-2 h-[40px] rounded-[5px]
+            pl-[17.38px] pt-[13px] pb-[13px] border-[#797D86]"
+          />
+          <SearchBar />
+        </div>
+      )}
     </div>
   );
 }

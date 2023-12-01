@@ -56,51 +56,70 @@ function SearchBar() {
 
   if (!isLoading) {
     return (
-      <div>
-        <label htmlFor="input-ingredient">
-          <input
-            data-testid="ingredient-search-radio"
-            type="radio"
-            name="filter"
-            id="input-ingredient"
-            value="ingredient"
-            onChange={ handleChange }
-          />
-          Ingredient
-        </label>
-        {' '}
-        <label htmlFor="input-name-search">
-          <input
-            data-testid="name-search-radio"
-            type="radio"
-            name="filter"
-            id="input-name-search"
-            value="name-search"
-            onChange={ handleChange }
-          />
-          Name
-        </label>
-        {' '}
-        <label htmlFor="input-first-letter">
-          <input
-            data-testid="first-letter-search-radio"
-            type="radio"
-            name="filter"
-            id="input-first-letter"
-            value="first-letter"
-            onChange={ handleChange }
-          />
-          First Letter
-        </label>
-        {' '}
+      <div className="flex flex-col bg-[#41197F] rounded-[10px] flex-1">
+        <section className="flex items-center justify-center gap-[20px]">
+
+          <label
+            htmlFor="input-ingredient"
+            className=" text-[13px] font-normal leading-[9px] text-white"
+
+          >
+            <input
+              data-testid="ingredient-search-radio"
+              type="radio"
+              name="filter"
+              id="input-ingredient"
+              value="ingredient"
+              onChange={ handleChange }
+              className="w-[11px] h-[11px] rounded-[6px] mr-[5px]"
+            />
+            Ingredient
+          </label>
+          <label
+            htmlFor="input-name-search"
+            className=" text-[13px] font-normal leading-[9px] text-white"
+
+          >
+            <input
+              data-testid="name-search-radio"
+              type="radio"
+              name="filter"
+              id="input-name-search"
+              value="name-search"
+              onChange={ handleChange }
+              className="w-[11px] h-[11px] rounded-[6px] mr-[5px]"
+
+            />
+            Name
+          </label>
+          <label
+            htmlFor="input-first-letter"
+            className=" text-[13px] font-normal leading-[9px] text-white"
+          >
+            <input
+              data-testid="first-letter-search-radio"
+              type="radio"
+              name="filter"
+              id="input-first-letter"
+              value="first-letter"
+              onChange={ handleChange }
+              className="w-[11px] h-[11px] rounded-[6px] mr-[5px]"
+
+            />
+            First Letter
+          </label>
+        </section>
+
         <button
           data-testid="exec-search-btn"
           type="button"
           onClick={
             () => (pathname === '/meals' ? handleClickMeals() : handleClickDrinks())
           }
+          className="text-white bg-[#FCC436] w-[208px] h-[25px]
+          rounded-[5px] m-auto flex justify-center items-center"
         >
-          Search
+          SEARCH
         </button>
       </div>
     );

@@ -58,6 +58,7 @@ function Login() {
             data-testid="password-input"
             type="password"
             value={ passwordInput }
+            placeholder="Password"
             onChange={ ({ target }) => setPasswordInput(target.value) }
             className="w-[276px] h-[40px] rounded-[5px] pl-[20px] pt-[14px] pb-[12px]
           text-[14px] leading-[14.35px] placeholder:text-[#41197F]
