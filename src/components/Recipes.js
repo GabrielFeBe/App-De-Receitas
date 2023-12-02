@@ -9,6 +9,8 @@ import {
   fetchCleanFilter,
   fetchCleanFilterDrinks,
 } from '../redux/actions';
+import Header from './Header';
+import { catalogDrinkHashmap, catalogMealgHashmap } from '../utils/ImageHashMap';
 
 export default function Recipes() {
   const location = useLocation();
@@ -44,22 +46,49 @@ export default function Recipes() {
 
   return (
     <div>
-      <div>
+      <Header />
+      <div
+        className="flex h-[120px] xxs:h-[140px] gap-[5px] xxs:gap-[7px] sm:gap-[10px]
+      sm:h-[160px] items-center justify-center"
+      >
         {pathname === '/meals'
           ? (
             <button
               data-testid="All-category-filter"
               onClick={ () => dispatch(fetchCleanFilter()) }
+              className="h-[70px] xxs:h-[85px] sm:h-[100px]
+               w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
             >
-              All
+              <img
+                src={ catalogMealgHashmap.All }
+                alt=""
+                className="w-[40px] xxs:w-[55px] sm:w-[70px]"
+              />
+              <small
+                className="text-[9px] leading-[10px]"
+              >
+                All
+              </small>
             </button>
           )
           : (
             <button
               data-testid="All-category-filter"
               onClick={ () => dispatch(fetchCleanFilterDrinks()) }
+              className="h-[70px] xxs:h-[85px] sm:h-[100px]
+               w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
             >
-              All
+              <img
+                src={ catalogDrinkHashmap.All }
+                alt=""
+                className="w-[40px] xxs:w-[55px] sm:w-[70px]"
+
+              />
+              <small
+                className="text-[9px] leading-[10px]"
+              >
+                All
+              </small>
             </button>)}
 
         {pathname === '/drinks' ? categoryDrinks.map((drink, i) => (
@@ -75,8 +104,15 @@ export default function Recipes() {
                 setCategorySelect(false);
               }
             } }
+            className="h-[70px] xxs:h-[85px] sm:h-[100px]
+            w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
           >
-            {drink.strCategory}
+            <img
+              src={ catalogDrinkHashmap[drink.strCategory] }
+              className="w-[40px] xxs:w-[55px] sm:w-[70px]"
+              alt=""
+            />
+            <small className="text-[9px] leading-[10px]">{drink.strCategory}</small>
           </button>)) : categoryMeals.map((meals, i) => (
           (
             <button
@@ -91,8 +127,15 @@ export default function Recipes() {
                   setCategorySelect(false);
                 }
               } }
+              className="h-[70px] xxs:h-[85px] sm:h-[100px]
+              w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
             >
-              {meals.strCategory}
+              <img
+                src={ catalogMealgHashmap[meals.strCategory] }
+                className="w-[40px] xxs:w-[55px] sm:w-[70px]"
+                alt=""
+              />
+              <small className="text-[9px] leading-[10px]">{meals.strCategory}</small>
             </button>)
         ))}
       </div>

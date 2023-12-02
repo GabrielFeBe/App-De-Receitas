@@ -8,9 +8,11 @@ import purpleSearch from '../svg/header/searchPurple.svg';
 import logo from '../svg/header/logo.svg';
 import icon from '../svg/header/icon.svg';
 import meals from '../svg/header/meals.svg';
+import drinks from '../svg/header/drinks.svg';
 
 const objSvg = {
   Meals: meals,
+  Drinks: drinks,
 };
 
 function Header() {
@@ -47,9 +49,7 @@ function Header() {
     default:
       break;
     }
-    // expect warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     dispatch(searchInputAction(searchInput));

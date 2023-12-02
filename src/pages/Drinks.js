@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { fetchDrinks } from '../services/API';
 
@@ -28,7 +27,6 @@ function Drinks() {
 
   return (
     <div>
-      <Header />
       {(data.length >= 1 ? data : dataToRender)
         .filter((dr, index) => index < MAX_INDEX)
         .map((drink, index) => (

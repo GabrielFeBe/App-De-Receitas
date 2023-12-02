@@ -57,7 +57,7 @@ function SearchBar() {
   if (!isLoading) {
     return (
       <div className="flex flex-col bg-[#41197F] rounded-[10px] flex-1">
-        <section className="flex items-center justify-center gap-[20px]">
+        <section className="flex items-center justify-center gap-[20px] mt-[15px]">
 
           <label
             htmlFor="input-ingredient"

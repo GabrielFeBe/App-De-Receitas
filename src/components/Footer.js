@@ -2,9 +2,9 @@ import React from 'react';
 import './style/Footer.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import drinkIcon from '../images/drinkIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
 import { sendDataAction } from '../redux/actions';
+import drinkIcon from '../svg/footer/DrinksIcon.svg';
+import mealIcon from '../svg/footer/MealsIcon.svg';
 
 export default function Footer() {
   const history = useHistory();
@@ -23,10 +23,12 @@ export default function Footer() {
   return (
     <footer
       data-testid="footer"
+      className="bg-[#41197F] w-full h-[52px] flex justify-between items-center"
     >
       <button
         type="button"
         onClick={ handleRedirectDrinks }
+        className="ml-[36px]"
       >
         <img
           data-testid="drinks-bottom-btn"
@@ -37,6 +39,8 @@ export default function Footer() {
       <button
         type="button"
         onClick={ handleRedirectMeals }
+        className="mr-[36px]"
+
       >
         <img
           data-testid="meals-bottom-btn"
