@@ -9,10 +9,17 @@ import logo from '../svg/header/logo.svg';
 import icon from '../svg/header/icon.svg';
 import meals from '../svg/header/meals.svg';
 import drinks from '../svg/header/drinks.svg';
+import doneRecipes from '../svg/header/doneRecipes.svg';
+import favoriteRecipes from '../svg/header/favorites.svg';
+import profile from '../svg/header/profile.svg';
 
 const objSvg = {
   Meals: meals,
   Drinks: drinks,
+  'Done Recipes': doneRecipes,
+  'Favorite Recipes': favoriteRecipes,
+  Profile: profile,
+
 };
 
 function Header() {
