@@ -65,7 +65,7 @@ function DoneRecipes() {
           <small className="text-[9px] leading-[10px]">Drinks</small>
         </button>
       </section>
-      <main className="flex flex-wrap justify-center">
+      <main className="flex flex-wrap justify-center gap-[20px]">
 
         {doneRecipes?.filter(({ type }) => {
           if (filterRecipes === 'all') return true;
@@ -75,35 +75,37 @@ function DoneRecipes() {
             ? (
               <section
                 key={ index }
-                className="flex w-[318px] h-[140px]
-              mr-[20px] ml-[20px] relative"
+                className="flex w-[318px] h-[140px] relative mt-[20px] p-0"
               >
                 <button
                   type="button"
                   onClick={
                     () => history.push(`/meals/${recipe.id}`)
                   }
-                  className="h-full w-[163.34px]"
+                  className=" w-[163.34px] h-full border-0 rounded-l-md"
                 >
                   <img
-                    style={ { width: '260px' } }
                     alt="icone do botao"
                     key={ index }
                     src={ recipe.image }
                     data-testid={ `${index}-horizontal-image` }
-                    className="h-full w-[163.34px]"
+                    className="h-full w-[163.34px] rounded-l-md"
 
                   />
                 </button>
-                <section>
+                <section
+                  className=" border-[0.52px] border-[#B1B1B1] flex-1
+                rounded-r-md flex flex-col"
+                >
 
                   <button
                     onClick={ () => history.push(`/meals/${recipe.id}`) }
+                    className="w-full mt-[19px] mb-[5px]"
                   >
                     <h4
                       data-testid={ `${index}-horizontal-name` }
                       className="text-[#1A1B1C] font-bold text-[12px]
-                    leading-[13px] text-center"
+                    leading-[13px] text-center m-0"
                     >
                       {recipe.name}
 
@@ -132,7 +134,7 @@ function DoneRecipes() {
                         setCopied(true);
                       })
                     }
-                    className="absolute top-0 right-0"
+                    className="absolute bottom-0 right-2"
                   >
                     <img
                       style={ { width: '30px' } }
@@ -165,53 +167,77 @@ function DoneRecipes() {
             : (
               <section
                 key={ index }
-                className="flex w-[318px] h-[140px]
-              mr-[20px] ml-[20px]"
+                className="flex w-[318px] h-[140px] relative mt-[20px] p-0"
               >
+
                 <button
                   type="button"
                   onClick={
                     () => history.push(`/drinks/${recipe.id}`)
                   }
-                  className="h-full w-[163.34px]"
+                  className="h-full w-[163.34px] rounded-l-md"
 
                 >
                   <img
                     alt="icone do botao"
                     src={ recipe.image }
                     data-testid={ `${index}-horizontal-image` }
-                    className="h-full w-[163.34px]"
+                    className="h-full w-[163.34px] rounded-l-md"
                   />
                 </button>
 
-                <button
-                  onClick={ () => history.push(`/drinks/${recipe.id}`) }
+                <section
+                  className=" border-[0.52px] border-[#B1B1B1] flex-1
+                rounded-r-md flex flex-col"
                 >
-                  <h4 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h4>
-                </button>
+                  <button
+                    onClick={ () => history.push(`/drinks/${recipe.id}`) }
+                    className="w-full mt-[19px] mb-[5px]"
+                  >
+                    <h4
+                      data-testid={ `${index}-horizontal-name` }
+                      className="text-[#1A1B1C] font-bold text-[12px]
+                     leading-[13px] text-center m-0"
+                    >
+                      {recipe.name}
 
-                <h3
-                  data-testid={ `${index}-horizontal-top-text` }
-                >
-                  {recipe.alcoholicOrNot}
+                    </h4>
+                  </button>
 
-                </h3>
-                <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-                <button
-                  onClick={
-                    () => clipboardCopy(`http://localhost:3000/drinks/${recipe.id}`).then(() => {
-                      setCopied(true);
-                    })
-                  }
-                >
-                  <img
-                    style={ { width: '30px' } }
-                    data-testid={ `${index}-horizontal-share-btn` }
-                    alt="icone do botao"
-                    src={ shareButton }
-                  />
-                </button>
-                {copied && <p>Link copied!</p>}
+                  <h3
+                    data-testid={ `${index}-horizontal-top-text` }
+                    className="leading-[9px] text-[9px] text-[#797D86] text-center"
+
+                  >
+                    {recipe.alcoholicOrNot}
+
+                  </h3>
+                  <p
+                    data-testid={ `${index}-horizontal-done-date` }
+                    className="font-normal text-[9px]
+                  leading-[9.23px] w-full text-center mt-[23px] mb-[35px] "
+                  >
+                    {recipe.doneDate}
+
+                  </p>
+                  <button
+                    onClick={
+                      () => clipboardCopy(`http://localhost:3000/drinks/${recipe.id}`).then(() => {
+                        setCopied(true);
+                      })
+                    }
+                    className="absolute bottom-0 right-2"
+                  >
+                    <img
+                      style={ { width: '30px' } }
+                      data-testid={ `${index}-horizontal-share-btn` }
+                      alt="icone do botao"
+                      src={ shareButton }
+                    />
+                  </button>
+                  {copied && <p>Link copied!</p>}
+                </section>
+
               </section>)
         ))}
       </main>
