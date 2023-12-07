@@ -132,7 +132,7 @@ function Header() {
       </header>
       <h1 data-testid="page-title" className="mb-[21px] mt-[31px]">
         <img
-          className="w-[147px] h-64px m-auto"
+          className="w-[147px] h-[64px] m-auto"
           src={ objSvg[title] }
           alt="Page icon"
         />

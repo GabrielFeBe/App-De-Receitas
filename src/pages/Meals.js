@@ -30,7 +30,7 @@ function Meals() {
       {(data.length >= 1 ? data : dataToRender)
         .filter((recipe, index) => index < MAX_INDEX)
         .map((rec, index) => (
-          <div
+          <section
             key={ rec.idMeal }
             data-testid={ `${index}-recipe-card` }
             className="m-3 w-[163px] h-[166px]  border-[#B1B1B1] border-[1px] rounded-xl"
@@ -56,7 +56,7 @@ function Meals() {
             >
               {rec.strMeal}
             </small>
-          </div>
+          </section>
         ))}
       <Footer />
     </div>

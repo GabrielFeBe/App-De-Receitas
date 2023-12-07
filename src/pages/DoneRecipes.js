@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import clipboardCopy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
-import shareButton from '../images/shareIcon.svg';
 import Header from '../components/Header';
 import useLocalStorage from '../hooks/useLocalStorage';
-import all from '../svg/all.svg';
-import meal from '../svg/MealsOptions/All.svg';
-import drink from '../svg/DrinkOptions/All.svg';
+import share from '../svg/profile/share.svg';
+import FilterButtons from '../components/FilterButtons';
 
 function DoneRecipes() {
   const [doneRecipes] = useLocalStorage('doneRecipes');
@@ -14,57 +12,23 @@ function DoneRecipes() {
   const [filterRecipes, setFilterRecipes] = useState('all');
   const history = useHistory();
   console.log(doneRecipes);
+  const handleFilterAll = () => {
+    setFilterRecipes('all');
+  };
+  const handleFilterMeals = () => {
+    setFilterRecipes('meal');
+  };
+  const handleFilterDrinks = () => {
+    setFilterRecipes('drink');
+  };
   return (
     <div>
       <Header />
-      <section className="flex items-center gap-[30px] justify-center mt-[37px]">
-
-        <button
-          data-testid="filter-by-all-btn"
-          onClick={ () => {
-            setFilterRecipes('all');
-          } }
-          className="h-[70px] xxs:h-[85px] sm:h-[100px]
-        w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
-        >
-          <img
-            src={ all }
-            alt=""
-            className="w-[40px] xxs:w-[55px] sm:w-[70px]"
-          />
-          <small className="text-[9px] leading-[10px]">All</small>
-        </button>
-        <button
-          data-testid="filter-by-meal-btn"
-          onClick={ () => {
-            setFilterRecipes('meal');
-          } }
-          className="h-[70px] xxs:h-[85px] sm:h-[100px]
-        w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
-        >
-          <img
-            src={ meal }
-            alt=""
-            className="w-[40px] xxs:w-[55px] sm:w-[70px]"
-          />
-          <small className="text-[9px] leading-[10px]">Meals</small>
-        </button>
-        <button
-          data-testid="filter-by-drink-btn"
-          onClick={ () => {
-            setFilterRecipes('drink');
-          } }
-          className="h-[70px] xxs:h-[85px] sm:h-[100px]
-        w-[40px] xxs:w-[55px] sm:w-[70px] flex flex-col items-center gap-[5px]"
-        >
-          <img
-            src={ drink }
-            alt=""
-            className="w-[40px] xxs:w-[55px] sm:w-[70px]"
-          />
-          <small className="text-[9px] leading-[10px]">Drinks</small>
-        </button>
-      </section>
+      <FilterButtons
+        handleFilterAll={ handleFilterAll }
+        handleFilterMeals={ handleFilterMeals }
+        handleFilterDrinks={ handleFilterDrinks }
+      />
       <main className="flex flex-wrap justify-center gap-[20px]">
 
         {doneRecipes?.filter(({ type }) => {
@@ -137,10 +101,9 @@ function DoneRecipes() {
                     className="absolute bottom-0 right-2"
                   >
                     <img
-                      style={ { width: '30px' } }
                       data-testid={ `${index}-horizontal-share-btn` }
                       alt="icone do botao"
-                      src={ shareButton }
+                      src={ share }
                     />
                   </button>
                   {copied && <p>Link copied!</p>}
@@ -229,10 +192,9 @@ function DoneRecipes() {
                     className="absolute bottom-0 right-2"
                   >
                     <img
-                      style={ { width: '30px' } }
                       data-testid={ `${index}-horizontal-share-btn` }
                       alt="icone do botao"
-                      src={ shareButton }
+                      src={ share }
                     />
                   </button>
                   {copied && <p>Link copied!</p>}

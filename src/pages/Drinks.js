@@ -26,13 +26,21 @@ function Drinks() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-wrap items-center justify-center">
+
       {(data.length >= 1 ? data : dataToRender)
         .filter((dr, index) => index < MAX_INDEX)
         .map((drink, index) => (
-          <section key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
+          <section
+            key={ drink.idDrink }
+            data-testid={ `${index}-recipe-card` }
+            className="m-3 w-[163px] h-[166px]  border-[#B1B1B1] border-[1px] rounded-xl"
+
+          >
             <button
               onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+              className="h-[125px] w-full"
+
             >
 
               <img
@@ -40,12 +48,18 @@ function Drinks() {
                 alt={ `thumbnail for recipe ${drink.strDrink}` }
                 data-testid={ `${index}-card-img` }
                 style={ { width: '180px' } }
+                className="h-[125px] w-full rounded-t-xl"
+
               />
 
             </button>
-            <p data-testid={ `${index}-card-name` }>
+            <small
+              data-testid={ `${index}-card-name` }
+              className="text-xs font-normal pt-[10px]
+            pl-[14px] pr-[5px] pb-[9px] w-[142px] text-[#1A1B1C]"
+            >
               {drink.strDrink}
-            </p>
+            </small>
           </section>
         ))}
       <Footer />
