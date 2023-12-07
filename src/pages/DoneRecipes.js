@@ -66,14 +66,14 @@ function DoneRecipes() {
                     onClick={ () => history.push(`/meals/${recipe.id}`) }
                     className="w-full mt-[19px] mb-[5px]"
                   >
-                    <h4
+                    <h2
                       data-testid={ `${index}-horizontal-name` }
                       className="text-[#1A1B1C] font-bold text-[12px]
                     leading-[13px] text-center m-0"
                     >
                       {recipe.name}
 
-                    </h4>
+                    </h2>
                   </button>
                   <h3
                     data-testid={ `${index}-horizontal-top-text` }
@@ -157,14 +157,14 @@ function DoneRecipes() {
                     onClick={ () => history.push(`/drinks/${recipe.id}`) }
                     className="w-full mt-[19px] mb-[5px]"
                   >
-                    <h4
+                    <h2
                       data-testid={ `${index}-horizontal-name` }
                       className="text-[#1A1B1C] font-bold text-[12px]
                      leading-[13px] text-center m-0"
                     >
                       {recipe.name}
 
-                    </h4>
+                    </h2>
                   </button>
 
                   <h3
