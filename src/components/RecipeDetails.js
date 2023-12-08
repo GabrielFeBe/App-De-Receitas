@@ -8,8 +8,8 @@ import { recommendationDrinks,
 import Carousel from './Carousel';
 import RecipeButton from './RecipeButton';
 import ShareButton from './ShareButton';
-import FavoriteButton from './FavoriteButton';
 import Recipe from './Recipe';
+import { catalogMealgHashmap } from '../utils/ImageHashMap';
 
 function RecipeDetails() {
   const [recipeAlreadyBeenDone, setRecipeAlreadyBeenDone] = useState(false);
@@ -52,7 +52,6 @@ function RecipeDetails() {
       {!loading && <Carousel />}
       { !recipeAlreadyBeenDone && <RecipeButton />}
       <ShareButton />
-      <FavoriteButton />
     </div>
   );
 }

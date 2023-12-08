@@ -26,44 +26,48 @@ function Drinks() {
   }, []);
 
   return (
-    <div className="flex flex-wrap items-center justify-center">
+    <>
+      <main className="flex flex-wrap items-center justify-center mb-[72px]">
 
-      {(data.length >= 1 ? data : dataToRender)
-        .filter((dr, index) => index < MAX_INDEX)
-        .map((drink, index) => (
-          <section
-            key={ drink.idDrink }
-            data-testid={ `${index}-recipe-card` }
-            className="m-3 w-[163px] h-[166px]  border-[#B1B1B1] border-[1px] rounded-xl"
-
-          >
-            <button
-              onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-              className="h-[125px] w-full"
+        {(data.length >= 1 ? data : dataToRender)
+          .filter((dr, index) => index < MAX_INDEX)
+          .map((drink, index) => (
+            <section
+              key={ drink.idDrink }
+              data-testid={ `${index}-recipe-card` }
+              className="m-3 w-[163px] h-[166px]
+              border-[#B1B1B1] border-[1px] rounded-xl"
 
             >
+              <button
+                onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+                className="h-[125px] w-full"
 
-              <img
-                src={ drink.strDrinkThumb }
-                alt={ `thumbnail for recipe ${drink.strDrink}` }
-                data-testid={ `${index}-card-img` }
-                style={ { width: '180px' } }
-                className="h-[125px] w-full rounded-t-xl"
+              >
 
-              />
+                <img
+                  src={ drink.strDrinkThumb }
+                  alt={ `thumbnail for recipe ${drink.strDrink}` }
+                  data-testid={ `${index}-card-img` }
+                  style={ { width: '180px' } }
+                  className="h-[125px] w-full rounded-t-xl"
 
-            </button>
-            <small
-              data-testid={ `${index}-card-name` }
-              className="text-xs font-normal pt-[10px]
+                />
+
+              </button>
+              <p
+                data-testid={ `${index}-card-name` }
+                className="text-xs font-normal pt-[10px] limited-text
             pl-[14px] pr-[5px] pb-[9px] w-[142px] text-[#1A1B1C]"
-            >
-              {drink.strDrink}
-            </small>
-          </section>
-        ))}
+              >
+                {drink.strDrink}
+              </p>
+            </section>
+          ))}
+      </main>
       <Footer />
-    </div>
+    </>
+
   );
 }
 

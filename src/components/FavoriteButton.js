@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import blackHearticon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import fav from '../svg/RecipeDetails/fav.svg';
+import notFavorite from '../svg/RecipeDetails/notFav.svg';
 
 // const base = [{
 //   id: id - da - receita,
@@ -48,7 +48,7 @@ export default function FavoriteButton() {
     }
   }, [recipe, favoriteRecipes]);
   return (
-    <div>
+    <div className="absolute top-2 right-2">
 
       { isFav
         ? (
@@ -58,7 +58,7 @@ export default function FavoriteButton() {
               deletingFavoriteRecipe();
             } }
           >
-            <img src={ blackHearticon } alt="Black Heart" data-testid="favorite-btn" />
+            <img src={ fav } alt="Black Heart" data-testid="favorite-btn" />
 
           </button>)
         : (
@@ -68,7 +68,7 @@ export default function FavoriteButton() {
               savingFavoriteRecipes();
             } }
           >
-            <img src={ whiteHeartIcon } alt="White Heart" data-testid="favorite-btn" />
+            <img src={ notFavorite } alt="White Heart" data-testid="favorite-btn" />
           </button>
         )}
     </div>

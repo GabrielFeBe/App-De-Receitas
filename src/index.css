@@ -15,3 +15,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.limited-text {
+  max-width: 129px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

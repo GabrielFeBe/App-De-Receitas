@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import FavoriteButton from './FavoriteButton';
+import { catalogMealgHashmap, catalogDrinkHashmap } from '../utils/ImageHashMap';
 
 const four = 4;
 
@@ -65,83 +67,123 @@ function RecipeDetails() {
   }, [recipeDetails]);
 
   return (
-    <div>
+    <div className="w-full">
       {recipeDetails.length > 0
       && (
-        <h2
+        <h1
           data-testid="recipe-title"
+          className="relative  w-full h-[40vh] h-[40dvh] text-white text-xl
+           bg-cover bg-no-repeat bg-center flex justify-center items-center font-black"
+          style={ { backgroundImage: `url("${recipeDetails[0].strDrinkThumb
+             || recipeDetails[0].strMealThumb}")` } }
         >
-          {recipeDetails[0].strDrink || recipeDetails[0].strMeal}
+          {recipeDetails[0].strDrink || recipeDetails[0].strMeal.toUpper}
+          <FavoriteButton />
+          <div className="absolute top-2 left-2 flex items-center gap-[13px]">
+            <img
+              src={ pathnameAfterSplit === 'meals'
+                ? catalogMealgHashmap[recipeDetails[0].strCategory]
+                : catalogDrinkHashmap[recipeDetails[0].strCategory] }
+              alt=""
+            />
+            <small className="font-bold text-sm text-[#FCC436]">
+              { recipeDetails[0].strCategory}
+            </small>
+          </div>
+        </h1>)}
+      {pathnameSplited.length === four
+        ? (
+          <div>
+            <ul
+              className=" p-[17px] border-[2px]
+               border-[#B1B1B1] rounded-md "
+            >
+              {
 
-        </h2>)}
+                ingredientAndMeasure.map(
+                  ({ ingredient, measure }, index) => (
+                    <li
+                      key={ index }
+                      data-testid={ `${index}-ingredient-step` }
+                      htmlFor={ index }
+                      className={ checkboxID.includes(index) ? 'riscado' : undefined }
+                    >
+                      <input
+                        type="checkbox"
+                        id={ index }
+                        onChange={ ({ target }) => {
+                          if (checkboxID.includes(index)) {
+                            const inProgRecipe = JSON.parse(
+                              localStorage.getItem('inProgressRecipes'),
+                            ) || {};
+                            inProgRecipe[pathnameAfterSplit] = inProgRecipe[
+                              pathnameAfterSplit]
+                  || {};
+                            inProgRecipe[
+                              pathnameAfterSplit][pathnameID] = checkboxID.filter(
+                              (checkbox) => checkbox !== +target.id,
+                            );
+                            localStorage.setItem(
+                              'inProgressRecipes',
+                              JSON.stringify(inProgRecipe),
+                            );
+                            setCheckboxID(checkboxID.filter(
+                              (checkbox) => checkbox !== +target.id,
+                            ));
+                          } else {
+                            const inProgRecipe = JSON.parse(
+                              localStorage.getItem('inProgressRecipes'),
+                            ) || {};
+                            inProgRecipe[pathnameAfterSplit] = inProgRecipe[
+                              pathnameAfterSplit]
+                  || {};
+                            inProgRecipe[pathnameAfterSplit][pathnameID] = [
+                              ...checkboxID, +target.id];
+                            localStorage.setItem(
+                              'inProgressRecipes',
+                              JSON.stringify(inProgRecipe),
+                            );
+                            setCheckboxID([...checkboxID, +target.id]);
+                          }
+                        } }
+                        checked={ checkboxID.includes(index) }
+                      />
+                      {`${ingredient}: ${measure}`}
+                    </li>),
+                )
+              }
+            </ul>
+          </div>
+        )
+        : (
+          <div className=" w-[250px] smd:w-[335px] m-auto">
+            <h2 className="ml-[10px]">Ingredients</h2>
+            <ul
+              className=" p-[17px] border-[2px]
+               border-[#B1B1B1] rounded-md "
+            >
+
+              {ingredientAndMeasure.map(({ ingredient, measure }, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  className="text-[#1A1B1C] text-sm"
+                >
+                  {`${ingredient}: ${measure}`}
+
+                </li>))}
+            </ul>
+          </div>
+
+        )}
+
       { recipeDetails.length > 0
       && (
-        <>
-          <img
-            src={ recipeDetails[0].strDrinkThumb || recipeDetails[0].strMealThumb }
-            alt="recipe content"
-            data-testid="recipe-photo"
-          />
-          <p data-testid="recipe-category">
-            { pathnameAfterSplit === 'meals' ? recipeDetails[0].strCategory
-              : recipeDetails[0].strAlcoholic}
+        <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>)}
 
-          </p>
-          <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
-
-        </>)}
-      {pathnameSplited.length === four ? ingredientAndMeasure.map(
-        ({ ingredient, measure }, index) => (
-          <label
-            key={ index }
-            data-testid={ `${index}-ingredient-step` }
-            htmlFor={ index }
-            className={ checkboxID.includes(index) ? 'riscado' : undefined }
-          >
-            <input
-              type="checkbox"
-              id={ index }
-              onChange={ ({ target }) => {
-                if (checkboxID.includes(index)) {
-                  const inProgRecipe = JSON.parse(
-                    localStorage.getItem('inProgressRecipes'),
-                  ) || {};
-                  inProgRecipe[pathnameAfterSplit] = inProgRecipe[pathnameAfterSplit]
-                  || {};
-                  inProgRecipe[pathnameAfterSplit][pathnameID] = checkboxID.filter(
-                    (checkbox) => checkbox !== +target.id,
-                  );
-                  localStorage.setItem('inProgressRecipes', JSON.stringify(inProgRecipe));
-                  setCheckboxID(checkboxID.filter((checkbox) => checkbox !== +target.id));
-                } else {
-                  const inProgRecipe = JSON.parse(
-                    localStorage.getItem('inProgressRecipes'),
-                  ) || {};
-                  inProgRecipe[pathnameAfterSplit] = inProgRecipe[pathnameAfterSplit]
-                  || {};
-                  inProgRecipe[pathnameAfterSplit][pathnameID] = [
-                    ...checkboxID, +target.id];
-                  localStorage.setItem('inProgressRecipes', JSON.stringify(inProgRecipe));
-                  setCheckboxID([...checkboxID, +target.id]);
-                }
-              } }
-              checked={ checkboxID.includes(index) }
-            />
-            {`${ingredient}: ${measure}`}
-          </label>),
-      )
-        : ingredientAndMeasure.map(({ ingredient, measure }, index) => (
-          <p
-            key={ index }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            {`${ingredient}: ${measure}`}
-
-          </p>))}
-      <br />
       { pathnameAfterSplit === 'meals' && recipeDetails.length > 0
       && <iframe
-        width="560"
+        width="fit-content"
         height="315"
         src={ urlForVideo }
         data-testid="video"
