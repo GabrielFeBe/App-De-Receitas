@@ -47,30 +47,38 @@ export default function FavoriteButton() {
       console.log(isThere);
     }
   }, [recipe, favoriteRecipes]);
+  if (isFav) {
+    return (
+      <button
+        onClick={ () => {
+          setIsFav(false);
+          deletingFavoriteRecipe();
+        } }
+      >
+        <img
+          src={ fav }
+          alt="Black Heart"
+          data-testid="favorite-btn"
+          className="w-[25px] h-[25px]"
+        />
+
+      </button>
+    );
+  }
   return (
-    <div className="absolute top-2 right-2">
 
-      { isFav
-        ? (
-          <button
-            onClick={ () => {
-              setIsFav(false);
-              deletingFavoriteRecipe();
-            } }
-          >
-            <img src={ fav } alt="Black Heart" data-testid="favorite-btn" />
-
-          </button>)
-        : (
-          <button
-            onClick={ () => {
-              setIsFav(true);
-              savingFavoriteRecipes();
-            } }
-          >
-            <img src={ notFavorite } alt="White Heart" data-testid="favorite-btn" />
-          </button>
-        )}
-    </div>
+    <button
+      onClick={ () => {
+        setIsFav(true);
+        savingFavoriteRecipes();
+      } }
+    >
+      <img
+        src={ notFavorite }
+        alt="White Heart"
+        data-testid="favorite-btn"
+        className="w-[25px] h-[25px]"
+      />
+    </button>
   );
 }

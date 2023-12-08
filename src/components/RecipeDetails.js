@@ -7,9 +7,7 @@ import { recommendationDrinks,
   fetchDrinkUsingId } from '../redux/actions';
 import Carousel from './Carousel';
 import RecipeButton from './RecipeButton';
-import ShareButton from './ShareButton';
 import Recipe from './Recipe';
-import { catalogMealgHashmap } from '../utils/ImageHashMap';
 
 function RecipeDetails() {
   const [recipeAlreadyBeenDone, setRecipeAlreadyBeenDone] = useState(false);
@@ -51,7 +49,6 @@ function RecipeDetails() {
       {!recipeLoading && <Recipe /> }
       {!loading && <Carousel />}
       { !recipeAlreadyBeenDone && <RecipeButton />}
-      <ShareButton />
     </div>
   );
 }

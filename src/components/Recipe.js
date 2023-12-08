@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import { catalogMealgHashmap, catalogDrinkHashmap } from '../utils/ImageHashMap';
+import ShareButton from './ShareButton';
 
 const four = 4;
 
@@ -77,8 +78,14 @@ function RecipeDetails() {
           style={ { backgroundImage: `url("${recipeDetails[0].strDrinkThumb
              || recipeDetails[0].strMealThumb}")` } }
         >
-          {recipeDetails[0].strDrink || recipeDetails[0].strMeal.toUpper}
-          <FavoriteButton />
+          {
+            pathnameAfterSplit === 'meals' ? recipeDetails[0].strMeal.toUpperCase()
+              : recipeDetails[0].strDrink.toUpperCase()
+          }
+          <div className="flex gap-[10px] absolute top-[19px] right-[30px] items-center">
+            <ShareButton />
+            <FavoriteButton />
+          </div>
           <div className="absolute top-2 left-2 flex items-center gap-[13px]">
             <img
               src={ pathnameAfterSplit === 'meals'
@@ -93,7 +100,8 @@ function RecipeDetails() {
         </h1>)}
       {pathnameSplited.length === four
         ? (
-          <div>
+          <section className=" w-[250px] smd:w-[335px] m-auto">
+            <h2 className="ml-[10px]">Ingredients</h2>
             <ul
               className=" p-[17px] border-[2px]
                border-[#B1B1B1] rounded-md "
@@ -104,12 +112,13 @@ function RecipeDetails() {
                   ({ ingredient, measure }, index) => (
                     <li
                       key={ index }
-                      data-testid={ `${index}-ingredient-step` }
-                      htmlFor={ index }
-                      className={ checkboxID.includes(index) ? 'riscado' : undefined }
+                      className={ `${checkboxID.includes(index) ? 'riscado' : undefined}  
+                    text-[#1A1B1C] text-sm flex items-center ` }
                     >
                       <input
+                        className="mr-[9px] w-[17px] h-[17px]"
                         type="checkbox"
+                        data-testid={ `${index}-ingredient-step` }
                         id={ index }
                         onChange={ ({ target }) => {
                           if (checkboxID.includes(index)) {
@@ -153,10 +162,10 @@ function RecipeDetails() {
                 )
               }
             </ul>
-          </div>
+          </section>
         )
         : (
-          <div className=" w-[250px] smd:w-[335px] m-auto">
+          <section className=" w-[250px] smd:w-[335px] m-auto">
             <h2 className="ml-[10px]">Ingredients</h2>
             <ul
               className=" p-[17px] border-[2px]
@@ -173,58 +182,64 @@ function RecipeDetails() {
 
                 </li>))}
             </ul>
-          </div>
+          </section>
 
         )}
 
       { recipeDetails.length > 0
       && (
-        <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>)}
+        <section className=" w-[250px] smd:w-[335px] m-auto">
+          <h2 className="ml-[10px]">Instructions</h2>
+          <p
+            data-testid="instructions"
+            className=" p-[17px] border-[2px]
+            border-[#B1B1B1] rounded-md "
+          >
+            {recipeDetails[0].strInstructions}
+
+          </p>
+        </section>
+
+      )}
 
       { pathnameAfterSplit === 'meals' && recipeDetails.length > 0
       && <iframe
-        width="fit-content"
+        width="100%"
         height="315"
         src={ urlForVideo }
         data-testid="video"
         title="YouTube video player"
-        allow="accelerometer;
-        autoplay;
-        clipboard-write;
-         encrypted-media;
-          gyroscope;
-          picture-in-picture;
-           web-share"
         allowfullscreen
       /> }
       {pathnameSplited.length === four && (
-        <button
-          data-testid="finish-recipe-btn"
-          className="startRecipe"
-          disabled={ checkboxID.length !== ingredientAndMeasure.length }
-          onClick={ () => {
-            history.push('/done-recipes');
-            const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-            console.log(doneRecipes);
-            const savingFavoriteRecipeObject = {
-              id: recipe.idDrink || recipe.idMeal,
-              type: recipe.idDrink !== undefined ? 'drink' : 'meal',
-              nationality: recipe.strArea !== undefined ? recipe.strArea : '',
-              category: recipe.strCategory || '',
-              alcoholicOrNot: recipe.strAlcoholic
+        <div className="w-[250px] smd:w-[335px] m-auto">
+          <button
+            data-testid="finish-recipe-btn"
+            className="w-[250px] smd:w-[335px] bg-[#FCC436] mt-[35px] mb-[35px]
+          text-white h-[40px] rounded-md"
+            disabled={ checkboxID.length !== ingredientAndMeasure.length }
+            onClick={ () => {
+              history.push('/done-recipes');
+              const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+              const savingFavoriteRecipeObject = {
+                id: recipe.idDrink || recipe.idMeal,
+                type: recipe.idDrink !== undefined ? 'drink' : 'meal',
+                nationality: recipe.strArea !== undefined ? recipe.strArea : '',
+                category: recipe.strCategory || '',
+                alcoholicOrNot: recipe.strAlcoholic
               !== undefined ? recipe.strAlcoholic : '',
-              name: recipe.strDrink || recipe.strMeal,
-              image: recipe.strDrinkThumb || recipe.strMealThumb,
-              doneDate: new Date(),
-              tags: recipe.strTags !== null ? recipe.strTags.split(',') : [],
-            };
-            doneRecipes.push(savingFavoriteRecipeObject);
-            console.log(doneRecipes);
-            localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-          } }
-        >
-          Finish Recipe
-        </button>)}
+                name: recipe.strDrink || recipe.strMeal,
+                image: recipe.strDrinkThumb || recipe.strMealThumb,
+                doneDate: new Date(),
+                tags: recipe.strTags !== null ? recipe.strTags.split(',') : [],
+              };
+              doneRecipes.push(savingFavoriteRecipeObject);
+              localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+            } }
+          >
+            FINISH RECIPE
+          </button>
+        </div>)}
     </div>
   );
 }
