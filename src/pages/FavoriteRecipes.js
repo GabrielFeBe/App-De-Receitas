@@ -69,7 +69,7 @@ function FavoriteRecipes() {
 
         />
       </div>
-      <main className="flex flex-wrap justify-center gap-[20px]">
+      <main className="flex flex-wrap justify-center gap-[20px] mb-[80px]">
 
         {favorite.map((rec, index) => (
           rec.type === 'meal' ? (
@@ -126,7 +126,7 @@ function FavoriteRecipes() {
                       data-testid={ `${index}-horizontal-share-btn` }
                       src={ share }
                       alt="Share Button"
-                      className="h-full w-[163.34px] rounded-l-md"
+                      className="h-[30px] w-[30px]"
                     />
                   </button>
                   <button
@@ -137,6 +137,7 @@ function FavoriteRecipes() {
                       data-testid={ `${index}-horizontal-favorite-btn` }
                       src={ heart }
                       alt="Favorite Button"
+                      className="h-[30px] w-[30px]"
                     />
                   </button>
                   {messageCopied
@@ -162,21 +163,18 @@ function FavoriteRecipes() {
                 <Link
                   to={ `/drinks/${rec.id}` }
                   className="h-full w-[163.34px] rounded-l-md"
-
                 >
                   <img
                     data-testid={ `${index}-horizontal-image` }
                     src={ rec.image }
                     alt={ `Imagem do drink ${rec.name}` }
                     className="h-full w-[163.34px] rounded-l-md"
-
                   />
                 </Link>
                 <section
                   className=" border-[0.52px] border-[#B1B1B1] flex-1
                 rounded-r-md flex flex-col"
                 >
-
                   <Link
                     to={ `/drinks/${rec.id}` }
                     className="w-full mt-[19px] mb-[5px] no-underline"
@@ -188,13 +186,11 @@ function FavoriteRecipes() {
                     leading-[13px] text-center m-0"
                     >
                       {rec.name}
-
                     </h2>
                   </Link>
                   <h3
                     data-testid={ `${index}-horizontal-top-text` }
                     className="leading-[9px] text-[9px] text-[#797D86] text-center"
-
                   >
                     {`${rec.alcoholicOrNot}`}
                   </h3>
@@ -210,6 +206,7 @@ function FavoriteRecipes() {
                         data-testid={ `${index}-horizontal-share-btn` }
                         src={ share }
                         alt="Share Button"
+                        className="h-[30px] w-[30px]"
                       />
                     </button>
                     <button
@@ -220,6 +217,7 @@ function FavoriteRecipes() {
                         data-testid={ `${index}-horizontal-favorite-btn` }
                         src={ heart }
                         alt="Favorite Button"
+                        className="h-[30px] w-[30px]"
                       />
                     </button>
                     {messageCopied

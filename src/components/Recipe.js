@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import { catalogMealgHashmap, catalogDrinkHashmap } from '../utils/ImageHashMap';
 import ShareButton from './ShareButton';
+import VideoFrame from './VideoFrame';
 
 const four = 4;
 
@@ -67,37 +68,37 @@ function RecipeDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipeDetails]);
 
+  if (!recipeDetails.length > 0) return null;
+
   return (
-    <div className="w-full">
-      {recipeDetails.length > 0
-      && (
-        <h1
-          data-testid="recipe-title"
-          className="relative  w-full h-[40vh] h-[40dvh] text-white text-xl
+    <main className="w-full">
+      <h1
+        data-testid="recipe-title"
+        className="relative  w-full h-[40vh] h-[40dvh] text-white text-xl
            bg-cover bg-no-repeat bg-center flex justify-center items-center font-black"
-          style={ { backgroundImage: `url("${recipeDetails[0].strDrinkThumb
+        style={ { backgroundImage: `url("${recipeDetails[0].strDrinkThumb
              || recipeDetails[0].strMealThumb}")` } }
-        >
-          {
-            pathnameAfterSplit === 'meals' ? recipeDetails[0].strMeal.toUpperCase()
-              : recipeDetails[0].strDrink.toUpperCase()
-          }
-          <div className="flex gap-[10px] absolute top-[19px] right-[30px] items-center">
-            <ShareButton />
-            <FavoriteButton />
-          </div>
-          <div className="absolute top-2 left-2 flex items-center gap-[13px]">
-            <img
-              src={ pathnameAfterSplit === 'meals'
-                ? catalogMealgHashmap[recipeDetails[0].strCategory]
-                : catalogDrinkHashmap[recipeDetails[0].strCategory] }
-              alt=""
-            />
-            <small className="font-bold text-sm text-[#FCC436]">
-              { recipeDetails[0].strCategory}
-            </small>
-          </div>
-        </h1>)}
+      >
+        {
+          pathnameAfterSplit === 'meals' ? recipeDetails[0].strMeal.toUpperCase()
+            : recipeDetails[0].strDrink.toUpperCase()
+        }
+        <div className="flex gap-[10px] absolute top-[19px] right-[30px] items-center">
+          <ShareButton />
+          <FavoriteButton />
+        </div>
+        <div className="absolute top-2 left-2 flex items-center gap-[13px]">
+          <img
+            src={ pathnameAfterSplit === 'meals'
+              ? catalogMealgHashmap[recipeDetails[0].strCategory]
+              : catalogDrinkHashmap[recipeDetails[0].strCategory] }
+            alt=""
+          />
+          <small className="font-bold text-sm text-[#FCC436]">
+            { recipeDetails[0].strCategory}
+          </small>
+        </div>
+      </h1>
       {pathnameSplited.length === four
         ? (
           <section className=" w-[250px] smd:w-[335px] m-auto">
@@ -186,31 +187,20 @@ function RecipeDetails() {
 
         )}
 
-      { recipeDetails.length > 0
-      && (
-        <section className=" w-[250px] smd:w-[335px] m-auto">
-          <h2 className="ml-[10px]">Instructions</h2>
-          <p
-            data-testid="instructions"
-            className=" p-[17px] border-[2px]
+      <section className=" w-[250px] smd:w-[335px] m-auto">
+        <h2 className="ml-[10px]">Instructions</h2>
+        <p
+          data-testid="instructions"
+          className=" p-[17px] border-[2px]
             border-[#B1B1B1] rounded-md "
-          >
-            {recipeDetails[0].strInstructions}
+        >
+          {recipeDetails[0].strInstructions}
 
-          </p>
-        </section>
+        </p>
+      </section>
 
-      )}
-
-      { pathnameAfterSplit === 'meals' && recipeDetails.length > 0
-      && <iframe
-        width="100%"
-        height="315"
-        src={ urlForVideo }
-        data-testid="video"
-        title="YouTube video player"
-        allowfullscreen
-      /> }
+      { pathnameAfterSplit === 'meals'
+      && <VideoFrame urlForVideo={ urlForVideo } />}
       {pathnameSplited.length === four && (
         <div className="w-[250px] smd:w-[335px] m-auto">
           <button
@@ -240,7 +230,7 @@ function RecipeDetails() {
             FINISH RECIPE
           </button>
         </div>)}
-    </div>
+    </main>
   );
 }
 

@@ -24,8 +24,8 @@ export default function Carousel() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathnameAfterSplit]);
   return (
-    <div className="carousel">
-
+    <div className="carousel w-[250px] smd:w-[335px] m-auto">
+      <h2 className="ml-[10px] mt-[35px]">Recommended</h2>
       <div
         className="box"
 

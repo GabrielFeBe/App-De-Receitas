@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import useLocalStorage from '../hooks/useLocalStorage';
 import share from '../svg/profile/share.svg';
 import FilterButtons from '../components/FilterButtons';
+import Footer from '../components/Footer';
 
 function DoneRecipes() {
   const [doneRecipes] = useLocalStorage('doneRecipes');
@@ -29,7 +30,7 @@ function DoneRecipes() {
         handleFilterMeals={ handleFilterMeals }
         handleFilterDrinks={ handleFilterDrinks }
       />
-      <main className="flex flex-wrap justify-center gap-[20px]">
+      <main className="flex flex-wrap justify-center gap-[20px] mb-[80px]">
 
         {doneRecipes?.filter(({ type }) => {
           if (filterRecipes === 'all') return true;
@@ -203,7 +204,7 @@ function DoneRecipes() {
               </section>)
         ))}
       </main>
-
+      <Footer />
     </div>
   );
 }

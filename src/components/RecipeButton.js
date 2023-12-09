@@ -16,8 +16,6 @@ export default function RecipeButton() {
     if (inProgRecipes !== null) {
       const drinksKeys = Object.keys(inProgRecipes.drinks || {});
       const mealsKeys = Object.keys(inProgRecipes.meals || {});
-      console.log(drinksKeys);
-      console.log(mealsKeys);
       switch (pathnameAfterSplit) {
       case 'meals':
         setCondition(mealsKeys.includes(pathnameId));
@@ -29,24 +27,27 @@ export default function RecipeButton() {
     }
   }, [pathnameAfterSplit, inProgRecipes, pathnameId]);
   return (
-    <div>
+    <div className="m-auto w-[250px] smd:w-[335px]">
 
       { condition ? (
         <button
-          className="startRecipe"
+          className="w-[250px] smd:w-[335px] bg-[#FCC436] mt-[35px] mb-[35px]
+        text-white h-[40px] rounded-md"
           data-testid="start-recipe-btn"
           onClick={ () => history.push(`${pathname}/in-progress`) }
+
         >
-          Continue Recipe
+          CONTINUE RECIPE
 
         </button>)
         : (
           <button
-            className="startRecipe"
+            className="w-[250px] smd:w-[335px] bg-[#FCC436] mt-[35px] mb-[35px]
+          text-white h-[40px] rounded-md"
             data-testid="start-recipe-btn"
             onClick={ () => history.push(`${pathname}/in-progress`) }
           >
-            Start Recipe
+            START RECIPE
 
           </button>
         )}

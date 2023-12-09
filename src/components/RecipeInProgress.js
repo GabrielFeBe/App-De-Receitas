@@ -5,9 +5,6 @@ import { recommendationDrinks,
   recommendationMeals,
   fetchMealUsingId,
   fetchDrinkUsingId } from '../redux/actions';
-import Carousel from './Carousel';
-import ShareButton from './ShareButton';
-import FavoriteButton from './FavoriteButton';
 import Recipe from './Recipe';
 
 function RecipeInProgress() {
@@ -16,7 +13,6 @@ function RecipeInProgress() {
   const pathnameSplited = pathname.split('/');
   const pathnameAfterSplit = pathnameSplited[1];
   const pathnameId = pathnameSplited[2];
-  const loading = useSelector(({ recommend }) => recommend.recommendLoading);
   const recipeLoading = useSelector(
     ({ RecipePage: { detailsLoading } }) => detailsLoading,
   );
@@ -37,9 +33,6 @@ function RecipeInProgress() {
   return (
     <div>
       {!recipeLoading && <Recipe /> }
-      {!loading && <Carousel />}
-      <ShareButton />
-      <FavoriteButton />
     </div>
   );
 }
