@@ -24,25 +24,27 @@ export default function Carousel() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathnameAfterSplit]);
   return (
-    <div className="carousel w-[250px] smd:w-[335px] m-auto">
-      <h2 className="ml-[10px] mt-[35px]">Recommended</h2>
-      <div
-        className="box"
+    <section className="w-[250px] smd:w-[335px] m-auto">
 
-      >
-        {recommendCard.map((recomendation, i) => (
-          <div key={ i } className="child">
-            <img
-              src={ recomendation.strMealThumb || recomendation.strDrinkThumb }
-              alt=""
-              data-testid={ `${i}-recommendation-card` }
-            />
-            <p data-testid={ `${i}-recommendation-title` }>
-              {recomendation.strMeal || recomendation.strDrink}
-            </p>
-          </div>
-        ))}
+      <h2 className="ml-[10px] mt-[35px]">Recommended</h2>
+      <div className="carousel ">
+        <div
+          className="box"
+        >
+          {recommendCard.map((recomendation, i) => (
+            <div key={ i } className="child">
+              <img
+                src={ recomendation.strMealThumb || recomendation.strDrinkThumb }
+                alt=""
+                data-testid={ `${i}-recommendation-card` }
+              />
+              <p data-testid={ `${i}-recommendation-title` }>
+                {recomendation.strMeal || recomendation.strDrink}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

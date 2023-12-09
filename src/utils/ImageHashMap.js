@@ -25,7 +25,6 @@ export const catalogDrinkHashmap = {
   Cocktail,
   'Other / Unknown': Other,
   Cocoa,
-
   Shake,
   All: AllDrinks,
 };
