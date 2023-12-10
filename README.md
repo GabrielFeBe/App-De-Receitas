@@ -4,6 +4,10 @@
 
 Bem-vindo ao Food & Drink App, onde você pode descobrir, salvar e fazer receitas deliciosas!
 
+## Layout
+
+- Esse projeto foi estilizado apenas para telas mobile, por isso, para uma melhor experiência, acesse o projeto pelo seu celular ou em modo de visualização mobile no navegador, eu segui todas as medidas do figma para que o projeto ficasse o mais parecido possível com o layout original.
+
 ## Tecnologias utilizadas
 
 - React
