@@ -80,6 +80,7 @@ function FavoriteRecipes() {
               <Link
                 to={ `/meals/${rec.id}` }
                 className="h-full w-[163.34px] rounded-l-md"
+
               >
                 <img
                   src={ rec.image }
@@ -91,7 +92,7 @@ function FavoriteRecipes() {
               </Link>
               <section
                 className=" border-[0.52px] border-[#B1B1B1] flex-1
-              rounded-r-md flex flex-col"
+                rounded-r-md flex flex-col"
               >
 
                 <Link
